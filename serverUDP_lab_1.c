@@ -37,7 +37,8 @@ int main() {
 		//This shouldn't happen
 		exit(-1);
 	}	
-	char msg[11] = "ola cliente";
+	char msg[20];
+ 	strcpy(msg, "ola cliente ;)\n");
 	printf("antes while\n");
 
 	while(1) {
@@ -45,6 +46,7 @@ int main() {
 		printf("antes receber server");
 		recvfrom(fd, buffer, sizeof(buffer), 0, (struct sockaddr*)&clientaddr, &addrlen);
 		printf("servidor recebeu\n");
+		printf("%s\n", buffer);
 		sendto(fd, msg, strlen(msg)+1, 0, (struct sockaddr*)&clientaddr, addrlen);
 		printf("servidor enviou\n");
 	}

@@ -28,7 +28,8 @@ int main() {
 	serveraddr.sin_addr.s_addr=((struct in_addr *)(hostptr->h_addr_list[0]))->s_addr;
 	serveraddr.sin_port=htons((u_short)PORT);
 
-	char msg[10] = "ola server";
+	char msg[20];
+	strcpy(msg, "ola server\n");
 	addrlen = sizeof(serveraddr);
 	printf("antes ifs\n");
 	//if((sendto(fd, msg, strlen(msg)+1, 0, (struct sockaddr*)&serveraddr, addrlen))==-1) { printf("exit\n"); exit(1); }
@@ -36,6 +37,7 @@ int main() {
 	printf("client enviou\n");
 	recvfrom(fd, buffer, sizeof(buffer), 0, (struct sockaddr*)&serveraddr, &addrlen);
 	printf("client recebeu\n");
+	printf("%s\n", buffer);
 
 	close(fd);
 	exit(0);
