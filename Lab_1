@@ -1,0 +1,27 @@
+Notes: Get rid of them whenever
+
+DNS: Translate names to IP and port number (gestor de nomes)
+Default port: 80
+Default email server: 25
+
+Local Network for the proj, it SHOULD work elsewhere.
+Socket: a door between application processes and the end-end-transport protocol (udp or TCP)
+TCP service_ reliable transfer of bytes from one process to another.
+
+socket: read file descriptor, write, typicall stuff.
+  -> sockets are ints
+  -> TCP garantees that bytes are delivered all nice and lovely (even if ya get interference or packet loss or whatever)
+  -> UDP: No garantees, it does its best but kek
+  
+Server (running on hostid)                                                            Client
+  create socket,
+  port=x, for
+  Incoming request:
+  welcomeSocket = socket()
+  |
+  |
+  |wait for incoming connection request
+  connectionSocket= accept()      <------------TCP------------------------> clientSocket = socket(); connect()
+  read write etc                                                                    u know the drill
+  
+  
