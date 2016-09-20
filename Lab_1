@@ -24,4 +24,14 @@ Server (running on hostid)                                                      
   connectionSocket= accept()      <------------TCP------------------------> clientSocket = socket(); connect()
   read write etc                                                                    u know the drill
   
+  server stuff:
+  first declare fd as a tcp socket.
+  Clear memory,
+  say the type of socket is AF_INET, declare any address for the server
+  declare port number (constant or whatever)
+  bind fd to server adress.
+  start listenig
   
+  warning: bind and fd = socket CAN return -1. Check 'em for errors.
+  
+  udp: no handshaking;
