@@ -4,8 +4,22 @@ import os
 import sys
 import settings
 import argparse
+from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
+
+
+def _list(args):
+    """Method that handles the list functionality"""
+    udp = UDP(args.tcs_name, args.tcs_port)
+    response = udp.request("ULQ\n")
+    print response
+
+
+def _request():
+    """Method that handles the request functionality"""
+    pass
+
 
 if __name__ == "__main__":
     log.info("Starting client...")
@@ -27,7 +41,7 @@ if __name__ == "__main__":
         if input_data.startswith('list'):
             # list - chama o ECP com UDP as protocol. pede a lista de topicos
             log.debug("list - Requesting list of possible translations from TCS server.")
-            _list()
+            _list(args)
         elif input_data.startswith('request'):
             # request - request translation for given language
             log.debug("request - Requesting translation for given arguments")
@@ -49,14 +63,3 @@ if __name__ == "__main__":
             # validate corner cases
             if input_data.strip() != '':
                 log.warning("\"{}\" command does not exist.".format(input_data))
-
-
-
-def _list():
-    """Method that handles the list functionality"""
-    pass
-
-
-def _request():
-    """Method that handles the request functionality"""
-    pass
