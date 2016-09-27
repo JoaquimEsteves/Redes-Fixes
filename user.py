@@ -4,17 +4,21 @@ import os
 import sys
 import settings
 import argparse
+from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
 
-def _list():
-	"""Method that handles the list functionality"""
-	pass
+def _list(args):
+    """Method that handles the list functionality"""
+    udp = UDP(args.tcs_name, args.tcs_port)
+    response = udp.request("ULQ\n")
+    print response
 
 
 def _request(input_data):
 	"""Method that handles the request functionality"""
 	try:
+		import pdb;pdb.set_trace()
 		input_data = input_data.split()
 		language = int(input_data[1])
 		type = input_data[2]
@@ -44,6 +48,7 @@ def _request_text(input,language):
 		TCPport = TCS[3]
 	except:
 		log.error("TCS server sent us a message with the wrong size. BAD TCS!")
+	pass
 	#send2u
 	#receivefromu
 
@@ -70,7 +75,7 @@ if __name__ == "__main__":
 		if input_data.startswith('list'):
 			# list - chama o ECP com UDP as protocol. pede a lista de topicos
 			log.debug("list - Requesting list of possible translations from TCS server.")
-			_list()
+			_list(args)
 		elif input_data.startswith('request'):
 			# request - request translation for given language
 			log.debug("request - Requesting translation for given arguments")

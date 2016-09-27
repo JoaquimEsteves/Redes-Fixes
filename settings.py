@@ -14,3 +14,10 @@ DEFAULT_TCS_PORT = 58000 + GN
 
 # Translation Server default configurations
 DEFAULT_TRS_PORT = 59000
+
+# Size for buffer to hold all messages send between client and server (1024bytes*4*1024 = 4mb)
+BUFFERSIZE = 4096 * 1024
+
+# Timeout delay that we accept between connections, in seconds
+TIMEOUT_DELAY = 2
+
