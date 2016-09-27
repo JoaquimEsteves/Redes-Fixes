@@ -1,4 +1,7 @@
 import settings
+from socket import *
+from utils import Logger
+log = Logger(debug=settings.DEBUG)
 
 
 class UDP(object):
@@ -45,7 +48,7 @@ class UDP(object):
         data = self._remove_new_line(data)
         return data
 
-    def run(self, handle_data=None):
+    def run(self, handler=None):
         """UDP server. TCS runs this server"""
         try:
             # Create a new socket using the given address family, socket type and protocol number
@@ -71,10 +74,10 @@ class UDP(object):
                 break
             log.debug("Got request from {}:{} > \"{}\".".format(addr_ip, addr_port, self._remove_new_line(data)))
 
-            if not handle_data:
+            if not handler:
                 # Create instance of ECPProtocols to handle all data
-                handle_data = ECPProtocols()
-            data = handle_data.dispatch(data)
+                raise ValueError("Handler is required!")
+            data = handler.dispatch(data)
 
             log.debug("Sending back > \"{}\".".format(self._remove_new_line(data)))
             # Send data to the socket.
