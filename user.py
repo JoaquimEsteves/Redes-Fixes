@@ -21,7 +21,7 @@ def _list(args):
 def _request(input_data):
 	"""Method that handles the request functionality"""
 	try:
-		import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 		input_data = input_data.split()
 		language = int(input_data[1])
 		type = input_data[2]
@@ -29,15 +29,17 @@ def _request(input_data):
 			_request_text(input_data[2:],language)
 		elif type == "f":
 			_request_file(input_data[2:],language)
-		else: 
-			raise 
-	except:
+		else:
+			raise SyntaxError
+	except (SyntaxError, ValueError):
 		log.warning("You're probably not using the correct formating, please use:\n request n t W1 W2 ... WN\n or \n request n f filename ")
+		pass
 	pass
 
 
 def _find_TCP_server(language):
 	"""Find the TCP server I'm going to communicate with for the language given as a parametre"""
+	log.info("looking for the TCP server!")
 	message_to_TCS = "UNQ " + LANGUAGE_ARRAY[language] + "\n"
 	try:
 		udp = UDP(TCS_NAME, TCS_PORT)
@@ -55,6 +57,7 @@ def _find_TCP_server(language):
 	
 def _request_text(input,language):
 	"""Requesting a text translation (TCP)"""
+	log.info("requesting text!")
 	number_of_words = len(input)
 	TCS_info = _find_TCP_server(language)
 	try:
@@ -68,6 +71,7 @@ def _request_text(input,language):
 
 def _request_file(filename,language):
 	"""Requesting a file translation! (TCP)"""
+	log.info("requesting a file!")
 	try:
 		file = open(filename)
 		#WE'RE GOING TO USE BASE 64 FOR FILE TRANSFER. THIS IS REALLY IMPORTANT PAY ATTENTION!!!!!!!!!!!!!!
@@ -75,7 +79,8 @@ def _request_file(filename,language):
 		filesize = len(encoded_data) #in bytes!
 		message_to_TCP = "TRQ f " + filename + " " + filesize + " " + encoded_data + "\n"
 		#actually send the data through TCP to TCR
-	pass
+	except:
+		log.error("Couldn't open the file mate!")
 
 if __name__ == "__main__":
 	log.info("Starting client...")
