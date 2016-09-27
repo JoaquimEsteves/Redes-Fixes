@@ -12,10 +12,10 @@ log = Logger(debug=settings.DEBUG)
 TCS_NAME = "tejo" #SET THESE IN MAIN PLZ
 TCS_PORT = "12345" #SET THESE IN MAIN PLZ
 def _list(args):
-    """Method that handles the list functionality"""
-    udp = UDP(args.tcs_name, args.tcs_port)
-    response = udp.request("ULQ\n")
-    print response
+	"""Method that handles the list functionality"""
+	udp = UDP(args.tcs_name, args.tcs_port)
+	response = udp.request("ULQ\n")
+	print response
 
 
 def _request(input_data):
@@ -73,7 +73,7 @@ def _request_file(filename,language):
 		#WE'RE GOING TO USE BASE 64 FOR FILE TRANSFER. THIS IS REALLY IMPORTANT PAY ATTENTION!!!!!!!!!!!!!!
 		encoded_data = base64.b64encode(file.readlines())
 		filesize = len(encoded_data) #in bytes!
-		message_to_TCP = "TRQ f " + filename + " " + filesize + " " + encoded_data
+		message_to_TCP = "TRQ f " + filename + " " + filesize + " " + encoded_data + "\n"
 		#actually send the data through TCP to TCR
 	pass
 
