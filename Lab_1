@@ -12,7 +12,7 @@ socket: read file descriptor, write, typicall stuff.
   -> sockets are ints
   -> TCP garantees that bytes are delivered all nice and lovely (even if ya get interference or packet loss or whatever)
   -> UDP: No garantees, it does its best but kek
-  
+  sadasdasdasdasd
 Server (running on hostid)                                                            Client
   create socket,
   port=x, for
