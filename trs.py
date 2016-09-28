@@ -53,7 +53,12 @@ class TRS(object):
 				self._SRG = False
 			elif response[1] == "NOK"
 				log.error("THE TCS SERVER REFUSED MY RETIREMENT! MAYBE TRY AGAIN LATER")
-				
+	def respond_to_users(self):
+		if self._SRG:
+		
+		else:
+			log.error("Attemped to respond to users when I have no connection to the TCS")
+	
 				
 if __name__ == "__main__":
     log.info("Starting TRS server...")
@@ -69,3 +74,4 @@ if __name__ == "__main__":
     args = parser.parse_args()  # validate them
     # print information just to make sure
     log.debug("Using Language = {}, TRS Port = {}, TCS Name = {}, TCS Port = {}.".format(args.language, args.trs_port, args.tcs_name, args.tcs_port))
+	trs = TRS(args.trs_port,args.
