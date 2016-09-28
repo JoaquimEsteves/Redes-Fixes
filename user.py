@@ -36,7 +36,6 @@ def _request(input_data):
 		pass
 	pass
 
-
 def _find_TCP_server(language):
 	"""Find the TCP server I'm going to communicate with for the language given as a parametre"""
 	log.info("looking for the TCP server!")
