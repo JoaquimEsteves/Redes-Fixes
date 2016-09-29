@@ -22,3 +22,5 @@ BUFFERSIZE = 4096 * 1024
 # Timeout delay that we accept between connections, in seconds
 TIMEOUT_DELAY = 2
 
+# "Local Database" path
+DB_PATH = os.getcwd() + "/local_db.txt"

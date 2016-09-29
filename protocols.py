@@ -1,3 +1,4 @@
+import sys
 import settings
 from socket import *
 from utils import Logger
@@ -7,7 +8,7 @@ class Protocol(object):
 
     def __init__(self, host, port, buffer_size=settings.BUFFERSIZE, max_connections=1):
         self.host = host
-        self.port = int(post)
+        self.port = int(port)
         self.buffer_size = buffer_size
         self.max_connections = max_connections
 
@@ -58,22 +59,22 @@ class UDP(Protocol):
         """UDP server. TCS runs this server"""
         try:
             # Create a new socket using the given address family, socket type and protocol number
-            s = socket(AF_INET, SOCK_DGRAM)
+            sock = socket(AF_INET, SOCK_DGRAM)
         except error, msg:
             log.error(msg)
-            sys.exit()
+            raise error
         try:
             # Bind socket to local host and port
-            s.bind((self.host, self.port))
+            sock.bind((self.host, self.port))
         except error , msg:
             log.error(msg)
-            sys.exit()
+            raise error
 
         log.info("UDP Server is ready for connection on [{}:{}].".format(self.host, self.port))
         # now keep talking with the client
         while True:
             # Receive data from client (data, addr)
-            data, addr = s.recvfrom(self.buffer_size)
+            data, addr = sock.recvfrom(self.buffer_size)
             # Get connection HostIP and HostPORT
             addr_ip, addr_port = addr
             if not data:
@@ -86,9 +87,9 @@ class UDP(Protocol):
 
             log.debug("Sending back > \"{}\".".format(self._remove_new_line(data)))
             # Send data to the socket.
-            s.sendto(data, addr)
+            sock.sendto(data, addr)
         # Close socket connection
-        s.close()
+        sock.close()
 
 
 class TCP(Protocol):
@@ -132,18 +133,18 @@ class TCP(Protocol):
         """TCP server. TRS runs this server"""
         try:
             # Create a new socket using the given address family, socket type and protocol number
-            s = socket(AF_INET, SOCK_STREAM)
+            sock = socket(AF_INET, SOCK_STREAM)
         except error, msg:
             log.error(msg)
-            sys.exit()
+            raise error
         try:
             # Bind socket to local host and port
-            s.bind((self.host, self.port))
+            sock.bind((self.host, self.port))
             # Listen for connections made to the socket.
             sock.listen(self.max_connections)
         except error , msg:
             log.error(msg)
-            sys.exit()
+            raise error
 
         log.info("TCP Server is ready for connection on [{}:{}].".format(self.host, self.port))
         while True:
