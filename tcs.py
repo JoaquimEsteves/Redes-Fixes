@@ -8,6 +8,8 @@ from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
 
+AVAILABLE_TRANSLATION_SERVERS = []
+
 
 class TCSHandler(object):
     """Class to wrap all Endpoints for TCS messages."""
@@ -30,12 +32,12 @@ class TCSHandler(object):
         # dispatch to correct method
         if protocol == "ULQ":
             data = self._ULQ(data)
-        elif protocol == "ULR":
-            data = self._ULR(data)
         elif protocol == "UNQ":
             data = self._UNQ(data)
-        elif protocol == "UNR":
-            data = self._UNR(data)
+        elif protocol == "SRG":
+            data = self._SRG(data)
+        elif protocol == "SUN":
+            data = self._SUN(data)
         else:
             data = "ERR"
         # put back the \n
@@ -45,23 +47,22 @@ class TCSHandler(object):
     def _ULQ(self, data):
         """"""
         log.debug("[ULQ] with data=\"{}\"".format(data))
-        return ""
-
-    def _ULR(self, data):
-        """"""
-        log.debug("[ULR] with data=\"{}\"".format(data))
-        return ""
+        return "ULR 2 Ingles Frances\n"
 
     def _UNQ(self, data):
         """"""
         log.debug("[UNQ] with data=\"{}\"".format(data))
-        return ""
+        return "UNR IPaddress Port\n"
 
-    def _UNR(self, data):
+    def _SRG(self, data):
         """"""
-        log.debug("[ULR] with data=\"{}\"".format(data))
-        return ""
+        log.debug("[SRG] with data=\"{}\"".format(data))
+        return "SRR status (OK or NOK)\n"
 
+    def _SUN(self, data):
+        """"""
+        log.debug("[SUN] with data=\"{}\"".format(data))
+        return "SUR (OK or NOK)\n"
 
 if __name__ == "__main__":
     log.info("Starting TCS server...")
