@@ -8,8 +8,6 @@ from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
 
-AVAILABLE_TRANSLATION_SERVERS = []
-
 
 class TCSHandler(object):
     """Class to wrap all Endpoints for TCS messages."""

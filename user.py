@@ -9,14 +9,15 @@ from protocols import UDP
 from utils import Logger
 import base64
 log = Logger(debug=settings.DEBUG)
+
 TCS_NAME = "tejo" #SET THESE IN MAIN PLZ
 TCS_PORT = "12345" #SET THESE IN MAIN PLZ
+
 def _list(args):
 	"""Method that handles the list functionality"""
 	udp = UDP(args.tcs_name, args.tcs_port)
 	response = udp.request("ULQ\n")
 	print response
-
 
 def _request(input_data):
 	"""Method that handles the request functionality"""
@@ -52,8 +53,8 @@ def _find_TCP_server(language):
 		log.info(TCS_answer)
 	elif TCS[1] != LANGUAGE_ARRAY[language]:
 		log.error("We seem to be having a problem here, I want to speak in" + LANGUAGE_ARRAY[language] + " but the server understood it as " + TCS[1] + "\n")
-	return TCS_answer	
-	
+	return TCS_answer
+
 def _request_text(input,language):
 	"""Requesting a text translation (TCP)"""
 	log.info("requesting text!")
@@ -80,6 +81,7 @@ def _request_file(filename,language):
 		#actually send the data through TCP to TCR
 	except:
 		log.error("Couldn't open the file mate!")
+
 
 if __name__ == "__main__":
 	log.info("Starting client...")
