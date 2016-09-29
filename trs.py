@@ -7,6 +7,59 @@ import argparse
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
 
+# SRG
+# language
+# IPTRS portTRS
+
+class TRS(object):
+    """Class to wrap all functionality of TRS 'servers' """
+    def __init__(self, host=settings.DEFAULT_TRS_NAME, port=settings.DEFAULT_TRS_PORT, language):
+        """inits udp instance (TCS SERVER)"""
+		self._IPTRS = host;
+		self._portTRS = port;
+        #self.UDP = UDP(host, port)
+		self._language = language
+		#init TCP object here too!
+		self._SRG = False
+		
+	def introduce_myself(self,host=settings.DEFAULT_TCS_NAME,port=settings.DEFAULT_TCS_NAME)
+		"""Time to make myself known to the TCS!"""
+		message_to_send = "SRG " + self._language + " " + self._IPTRS + " " + self._portTRS + "\n"
+		try:
+			udp = UDP(host,port) #Create this in init?
+			response = udp.request(message_to_send)
+			if not response.startswith("SRR"):
+				log.error("SRR ERR")
+				log.info("Message from the TCR doesn't start with SRR!")
+				raise SyntaxError
+			response.split()
+			if response[1] == "OK"
+				self._SRG = True
+			elif response[1] == "NOK"
+				log.error("THE TCS SERVER REFUSED MY GREETINGS! MAYBE TRY AGAIN LATER")
+				
+	def retire(self,host=settings.DEFAULT_TCS_NAME,port = settings.DEFAULT_TCS_PORT)
+		"""Inform the TCS server I don't really have it in me anymore"""
+		message_to_send = "SUN " + self._language + " " + self._IPTRS + " " + self._portTRS + "\n"
+		try:
+			udp = UDP(host,port) #Create this in init?
+			response = udp.request(message_to_send)
+			if not response.startswith("SUR"):
+				log.error("SUR ERR")
+				log.info("Message from the TCR doesn't start with SUR!")
+				raise SyntaxError
+			response.split()
+			if response[1] == "OK"
+				self._SRG = False
+			elif response[1] == "NOK"
+				log.error("THE TCS SERVER REFUSED MY RETIREMENT! MAYBE TRY AGAIN LATER")
+	def respond_to_users(self):
+		if self._SRG:
+		
+		else:
+			log.error("Attemped to respond to users when I have no connection to the TCS")
+	
+				
 if __name__ == "__main__":
     log.info("Starting TRS server...")
     # format of command is ./trs language [-p TRSport] [-n TCSname] [-e TCSport],
@@ -21,3 +74,4 @@ if __name__ == "__main__":
     args = parser.parse_args()  # validate them
     # print information just to make sure
     log.debug("Using Language = {}, TRS Port = {}, TCS Name = {}, TCS Port = {}.".format(args.language, args.trs_port, args.tcs_name, args.tcs_port))
+	trs = TRS(args.trs_port,args.
