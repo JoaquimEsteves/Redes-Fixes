@@ -9,24 +9,36 @@ from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
 
+
 class DBWrapper(object):
     """Fake db manipulation. Collection of methods that manipulate
     the settings.DB_PATH txt file"""
 
-    # array with all accepted translation languages.
-    # accepts "errors" by humans.
-    VALID_LANGUAGES = sum([
-        ['Português', 'Portugues'],
-        ['Inglês', 'Ingles'],
-        ['Françês', 'Françes', 'Francês', 'Frances'],
-        ['Italiano'],
-        ['Espanhol'],
-        ['Alemão', 'Alemao']
-    ], [])
-
     def __init__(self, db_path=settings.DB_PATH):
         """Set basic variables"""
         self.db_path = db_path
+
+    def get_rows(self):
+        """Return list of rows from db_path "database" """
+        with open(self.db_path, 'r') as db:
+            db = db.readlines()
+        # clean row and slice it into array
+        db = [row.rstrip().split("\t") for row in db]
+        return db
+
+    def get_row(self, language):
+        """Return row for given language. Raise Exception if language is not found"""
+        for row in self.get_rows():
+            # get correct row
+            if language == row[0]:
+                return row
+        raise Exception("Language \"{}\" not found in local db".format(language))
+
+    def has_language(self, language):
+        """Check if given language already exists in "database" """
+        rows = self.get_rows()
+        languages = map(lambda x: x[0], rows)
+        return language in languages
 
     def add_trs_server(self, language=None, ipaddress=None, ipport=None):
         """adds line into db_path file. line contains given arguments separated by
@@ -36,8 +48,9 @@ class DBWrapper(object):
         if language is None and ipaddress is None and ipport is None:
             raise Exception("All three arguments are required!")
         # check if language string is valid
-        if language not in self.VALID_LANGUAGES
-            raise Exception("Language \"{}\" is not valid!".format(language))
+        if len(language) > settings.DB_LANGUAGE_MAX_CHARS:
+            raise Exception("Language \"{}\" is not valid! Max {} chars".format(
+                language, settings.DB_LANGUAGE_MAX_CHARS))
         # check if ipaddress is in correct format
         try:
             # valid
@@ -61,13 +74,9 @@ class DBWrapper(object):
     def remove_trs_server(self, language=None, ipaddress=None, ipport=None):
         """remove line from db_path file. if no line is found, nothing happens"""
         # read all db to memory (list)
-        with open(self.db_path, 'r') as db:
-            db = db.readlines()
-        # remove TRS config from db
+        rows = self.get_rows()
         updated_db = list()
-        for row in db:
-            # clean row and slice it into array
-            row = row.rstrip().split("\t")
+        for row in rows:
             # check if current row is the one I want to delete
             if row[0] == language and row[1] == ipaddress and row[2] == ipport:
                 continue
@@ -114,14 +123,32 @@ class TCSHandler(object):
         return data
 
     def _ULQ(self, data):
-        """"""
+        """Return information from database"""
         log.debug("[ULQ] with data=\"{}\"".format(data))
-        return "ULR 2 Ingles Frances"
+        rows = self.DB.get_rows()
+        languages = map(lambda x: x[0], rows)
+        num_languages = len(rows)
+        if num_languages == 0:
+            # no languages (TRS Servers) available
+            return "ULR EOF"
+
+        return "ULR {} {}".format(num_languages, " ".join(languages)).strip()
 
     def _UNQ(self, data):
-        """"""
+        """Get IpAddress and IpPort from given language (TRS) server"""
         log.debug("[UNQ] with data=\"{}\"".format(data))
-        return "UNR IPaddress Port"
+        try:
+            language = data[0]
+            row = self.DB.get_row(language)
+            ipaddress, ipport = row[1], row[2]
+        except IndexError, e:
+            log.error(e.message)
+            return "UNR ERR"
+        except Exception, e:
+            log.error(e.message)
+            return "UNR EOF"
+
+        return "UNR {} {}".format(ipaddress, ipport)
 
     def _SRG(self, data):
         """Register incoming request from TRS server to local database"""
@@ -129,7 +156,15 @@ class TCSHandler(object):
         try:
             # get configuration of incoming TRS request
             language, ipaddress, ipport = data[:]
-            self.DB.add_trs_server(language, ipaddress, ipport)
+            # check if language already register
+            language_exists = self.DB.has_language(language)
+            # check if Language Limit was already exceded.
+            max_db_limit = len(self.DB.get_rows()) > settings.DB_LANGUAGE_MAX_LIMIT
+            if not language_exists and not max_db_limit:
+                self.DB.add_trs_server(language, ipaddress, ipport)
+            else:
+                raise Exception("Language \"{}\" already register. (DB row count = {})".format(
+                    language, len(self.DB.get_rows())))
             status = "OK"
         except Exception, e:
             log.error(e.message)

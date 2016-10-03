@@ -24,3 +24,5 @@ TIMEOUT_DELAY = 2
 
 # "Local Database" path
 DB_PATH = os.getcwd() + "/local_db.txt"
+DB_LANGUAGE_MAX_CHARS = 20
+DB_LANGUAGE_MAX_LIMIT = 99

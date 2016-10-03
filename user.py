@@ -17,7 +17,12 @@ def _list(args):
 	"""Method that handles the list functionality"""
 	udp = UDP(args.tcs_name, args.tcs_port)
 	response = udp.request("ULQ\n")
-	print response
+	# make pretty response
+	data = response.split()
+	print("Got {} languages:".format(data[1]))
+	for i, lang in enumerate(data[2:], 1):
+		print("{}. {}".format(i, lang))
+
 
 def _request(input_data):
 	"""Method that handles the request functionality"""
