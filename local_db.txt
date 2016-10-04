@@ -1,0 +1,3 @@
+Frances	localhost	51234
+Italiano	localhost	59999
+Ingles	localhost	59000

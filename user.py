@@ -147,6 +147,6 @@ if __name__ == "__main__":
 					log.warning("\"{}\" command does not exist.".format(input_data))
 	except KeyboardInterrupt, e:
 		# if CTRL+C is pressed, then go for last step
-		log.info("CTRL+C - Exiting user application.")
+		log.info("\nCTRL+C - Exiting user application.")
 		pass
 
