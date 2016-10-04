@@ -49,7 +49,7 @@ def _request(args, input_data):
 	except (SyntaxError, ValueError, IndexError), e:
 		log.error(e.message)
 		log.warning("You're probably not using the correct formating, "
-				    "please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
+					"please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
 		return
 	# get language from tcs server
 	translation = __request_translation(args, input_data, request_msg)
@@ -59,9 +59,12 @@ def _request(args, input_data):
 def __request_file(input_data):
 	"""Build request message to request file translation from TRS Server"""
 	filename = input_data[3]
-	file = open(filename, 'r')
-	encoded_data = base64.b64encode(file.readlines())
+	with open(filename, "rb") as image_file:
+		encoded_data = base64.b64encode(image_file.read())
 	filesize = len(encoded_data) #in bytes!
+	
+	# if we chose not to encode then simply...
+	# data = file.read()
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
 
