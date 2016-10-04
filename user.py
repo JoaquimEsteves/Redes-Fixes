@@ -11,6 +11,9 @@ import base64
 log = Logger(debug=settings.DEBUG)
 
 
+AVAILABLE_LANGUAGES = []
+
+
 def _list(args):
 	"""Method that handles the list functionality"""
 	udp = UDP(args.tcs_name, args.tcs_port)
@@ -22,6 +25,7 @@ def _list(args):
 	else:
 		print("Got {} languages:".format(data[1]))
 		for i, lang in enumerate(data[2:], 1):
+			AVAILABLE_LANGUAGES.append(lang)
 			print("{}. {}".format(i, lang))
 
 
@@ -60,6 +64,7 @@ def __request_file(input_data):
 	filesize = len(encoded_data) #in bytes!
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
+
 def __request_text(input_data):
 	"""Build request message to request text translation from TRS Server"""
 	words = input_data[3:]
@@ -68,11 +73,18 @@ def __request_text(input_data):
 		raise ValueError("No words were given to be translated.")
 	return "TRQ t {} {}\n".format(num_words, " ".join(words))
 
+
 def __request_translation(args, input_data, request_msg):
 	"""Return ipaddress an ipport to later connected with TRS server"""
 	log.debug("looking for the IP/port connection to TRS Server!")
 	udp = UDP(args.tcs_name, args.tcs_port)
-	response = udp.request("UNQ {}\n".format(int(input_data[1])))
+	try:
+		language = AVAILABLE_LANGUAGES[int(input_data[1]) - 1]
+	except IndexError, e:
+		log.error("No such language available.")
+		return
+
+	response = udp.request("UNQ {}\n".format(language))
 	data = response.split()
 	# validate response
 	if "ERR" in data:
@@ -84,9 +96,11 @@ def __request_translation(args, input_data, request_msg):
 	trs_ipaddress = data[1]
 	trs_ipport = data[2]
 	# and request translation
-	udp = UDP(args.tcs_name, args.tcs_port)
-	response = udp.request(request_msg)
-	return response
+	tcp = TCP(trs_ipaddress, trs_ipport)
+	response = tcp.request(request_msg)
+	data = response.split()
+	return trs_ipaddress + ": " + ", ".join(data[3:])
+
 
 if __name__ == "__main__":
 	log.info("Starting client...")
@@ -101,32 +115,38 @@ if __name__ == "__main__":
 	log.debug("Using TCS Name = {}, TCS Port = {}.".format(args.tcs_name, args.tcs_port))
 	log.info("Welcome :).")
 	# forever & ever (util "exit")
-	while(True):
-		# waits for client input:
-		input_data = raw_input()
-		# handle which command should run
-		if input_data.startswith('list'):
-			# list - chama o ECP com UDP as protocol. pede a lista de topicos
-			log.debug("list - Requesting list of possible translations from TCS server.")
-			_list(args)
-		elif input_data.startswith('request'):
-			# request - request translation for given language
-			log.debug("request - Requesting translation for given arguments")
-			_request(args, input_data)
-		elif input_data == 'exit':
-			# exit - exit user application
-			log.debug("exit - Exiting user application.")
-			break
-		elif input_data == 'help':
-			# help - show list of possible commands
-			commands = map(lambda x: '\t> {}'.format(x), [
-				'list: Requesting list of possible translations from TCS server.',
-				'request: Requesting translation for given arguments.\n\t\t> request n t N W1 W2 ... WN\n\t\t> request n f filename',
-				'exit: Exit current user application.',
-			])
-			log.info("""List of possible commands:\n{}""".format(
-				"\n".join(commands)))
-		else:
-			# validate corner cases
-			if input_data.strip() != '':
-				log.warning("\"{}\" command does not exist.".format(input_data))
+	try:
+		while(True):
+			# waits for client input:
+			input_data = raw_input()
+			# handle which command should run
+			if input_data.startswith('list'):
+				# list - chama o ECP com UDP as protocol. pede a lista de topicos
+				log.debug("list - Requesting list of possible translations from TCS server.")
+				_list(args)
+			elif input_data.startswith('request'):
+				# request - request translation for given language
+				log.debug("request - Requesting translation for given arguments")
+				_request(args, input_data)
+			elif input_data == 'exit':
+				# exit - exit user application
+				log.debug("exit - Exiting user application.")
+				break
+			elif input_data == 'help':
+				# help - show list of possible commands
+				commands = map(lambda x: '\t> {}'.format(x), [
+					'list: Requesting list of possible translations from TCS server.',
+					'request: Requesting translation for given arguments.\n\t\t> request n t N W1 W2 ... WN\n\t\t> request n f filename',
+					'exit: Exit current user application.',
+				])
+				log.info("""List of possible commands:\n{}""".format(
+					"\n".join(commands)))
+			else:
+				# validate corner cases
+				if input_data.strip() != '':
+					log.warning("\"{}\" command does not exist.".format(input_data))
+	except KeyboardInterrupt, e:
+		# if CTRL+C is pressed, then go for last step
+		log.info("\nCTRL+C - Exiting user application.")
+		pass
+
