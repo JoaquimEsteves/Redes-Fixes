@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import sys
 import settings
 from socket import *
@@ -43,11 +45,11 @@ class UDP(Protocol):
         # in case of timeout
         except timeout, msg:
             # TODO: Maybe retry 3 times
-            log.error("Request Timeout.")
+            log.error("[UDP] Request Timeout.")
             data = "ERR"
         # in case of error
         except error, msg:
-            log.error("Something happen when trying to connect to {}:{}.".format(self.host, self.port))
+            log.error("[UDP] Something happen when trying to connect to {}:{}. Error: {}".format(self.host, self.port, msg))
             data = "ERR"
         finally:
             # Close socket connection
@@ -117,11 +119,11 @@ class TCP(Protocol):
             log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(data)))
         # in case of timeout
         except timeout, msg:
-            log.error("Request Timeout.")
+            log.error("[TCP] Request Timeout.")
             data = "ERR"
         # in case of error
         except error, msg:
-            log.error("Something happen when trying to connect to {}:{}.".format(self.host, self.port))
+            log.error("[TCP] Something happen when trying to connect to {}:{}. Error: {}".format(self.host, self.port, msg))
             data = "ERR"
         finally:
             # Close socket connection

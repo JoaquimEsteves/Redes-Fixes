@@ -195,6 +195,11 @@ if __name__ == "__main__":
     # print information just to make sure
     log.debug("Using TCS Port = {}.".format(args.tcs_port))
 
-    # running server
-    udp = UDP(settings.DEFAULT_TCS_NAME, args.tcs_port)
-    udp.run(handler=TCSHandler())
+    try:
+        # running server
+        udp = UDP(settings.DEFAULT_TCS_NAME, args.tcs_port)
+        udp.run(handler=TCSHandler())
+    except KeyboardInterrupt, e:
+        # if CTRL+C is pressed, then go for last step
+        log.info("Exiting TCS Server...")
+        pass
