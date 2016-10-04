@@ -33,17 +33,9 @@ def _request(args, input_data):
 		language = int(input_data[1])
 		type = input_data[2]
 		if type == "t":
-			words = input_data[3:]
-			num_words = len(words)
-			if num_words == 0:
-				raise ValueError("No words were given to be translated.")
-			request_msg = "TRQ t {} {}\n".format(num_words, " ".join(words))
+			request_msg = __request_text(input_data)
 		elif type == "f":
-			filename = input_data[3]
-			file = open(filename, 'r')
-			encoded_data = base64.b64encode(file.readlines())
-			filesize = len(encoded_data) #in bytes!
-			request_msg = "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
+			request_msg = __request_file(input_data)
 		else:
 			# not valid request type
 			raise SyntaxError
@@ -55,8 +47,29 @@ def _request(args, input_data):
 		log.warning("You're probably not using the correct formating, "
 				    "please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
 		return
-	import pdb; pdb.set_trace()
 	# get language from tcs server
+	translation = __request_translation(args, input_data, request_msg)
+	print translation
+
+
+def __request_file(input_data):
+	"""Build request message to request file translation from TRS Server"""
+	filename = input_data[3]
+	file = open(filename, 'r')
+	encoded_data = base64.b64encode(file.readlines())
+	filesize = len(encoded_data) #in bytes!
+	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
+
+def __request_text(input_data):
+	"""Build request message to request text translation from TRS Server"""
+	words = input_data[3:]
+	num_words = len(words)
+	if num_words == 0:
+		raise ValueError("No words were given to be translated.")
+	return "TRQ t {} {}\n".format(num_words, " ".join(words))
+
+def __request_translation(args, input_data, request_msg):
+	"""Return ipaddress an ipport to later connected with TRS server"""
 	log.debug("looking for the IP/port connection to TRS Server!")
 	udp = UDP(args.tcs_name, args.tcs_port)
 	response = udp.request("UNQ {}\n".format(int(input_data[1])))
@@ -68,13 +81,12 @@ def _request(args, input_data):
 	elif "EOF" in data:
 		log.error("Invalid language ID")
 		return
-
 	trs_ipaddress = data[1]
 	trs_ipport = data[2]
 	# and request translation
 	udp = UDP(args.tcs_name, args.tcs_port)
 	response = udp.request(request_msg)
-
+	return response
 
 if __name__ == "__main__":
 	log.info("Starting client...")
