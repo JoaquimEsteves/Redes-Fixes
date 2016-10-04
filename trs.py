@@ -48,19 +48,21 @@ class TRSHandler(object):
 		"""Translation request!"""
 		type = data[0]
 		if type == "t":
-			return _TRQtext(data[1:])
+			return self._TRQtext(data[1:])
 		if type == "f":
-			return _TRQfile(data[1:])
+			data = data[1:]
+			return self._TRQfile(data)
 		else:
 			log.error("Got neither t nor an f from the input!")
 			return "ERR"
 	
-	def _TRQtext(data):
+	def _TRQtext(self,data):
 		pass
-	def _TRQfile(data):
+	def _TRQfile(self,data):
+		import pdb; pdb.set_trace()
 		filesize = data[1]
 		encoded_data = data[2]
-		if len(encoded_data) != filesize:
+		if len(encoded_data) != int(filesize):
 			log.error("Our file seems to be missing a few bytes!")
 			return "ERR"
 		with open("Output.png", "w") as my_file: #check to see if the pictures are the same!
