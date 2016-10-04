@@ -114,7 +114,7 @@ class TCP(Protocol):
             sock.sendall(data)
             # Receive data from the socket (max amount is the buffer size).
             data = sock.recv(self.buffer_size)
-            log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(self._limit_amount(data))))
+            log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(data)))
         # in case of timeout
         except timeout, msg:
             log.error("Request Timeout.")
