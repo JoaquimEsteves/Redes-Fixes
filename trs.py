@@ -59,7 +59,7 @@ class TRSHandler(object):
 	def _TRQtext(self,data):
 		pass
 	def _TRQfile(self,data):
-		import pdb; pdb.set_trace()
+		#import pdb; pdb.set_trace()
 		filesize = data[1]
 		encoded_data = data[2]
 		if len(encoded_data) != int(filesize):

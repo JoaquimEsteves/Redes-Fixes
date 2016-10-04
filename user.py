@@ -28,6 +28,9 @@ def _list(args):
 			AVAILABLE_LANGUAGES.append(lang)
 			print("{}. {}".format(i, lang))
 
+def _saveTCPFile(data):
+	with open("from_TCP_with_love.png", "w") as my_file: #check to see if the pictures are the same!
+			my_file.write(base64.b64decode(data[2]))
 
 def _request(args, input_data):
 	"""Method that handles the request functionality"""
@@ -103,6 +106,10 @@ def __request_translation(args, input_data, request_msg):
 	tcp = TCP(trs_ipaddress, trs_ipport)
 	response = tcp.request(request_msg)
 	data = response.split()
+	#special case...
+	if data[1] == 'f':
+		log.info("How lovely, the TCP has sent us a file!, let's save it")
+		_saveTCPFile(data[2:])
 	return trs_ipaddress + ": " + ", ".join(data[3:])
 
 
