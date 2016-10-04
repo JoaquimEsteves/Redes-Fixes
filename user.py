@@ -57,14 +57,15 @@ def _request(args, input_data):
 
 
 def __request_file(input_data):
+	
 	"""Build request message to request file translation from TRS Server"""
 	filename = input_data[3]
 	with open(filename, "rb") as image_file:
-		encoded_data = base64.b64encode(image_file.read())
-	filesize = len(encoded_data) #in bytes!
-	
-	# if we chose not to encode then simply...
-	# data = file.read()
+		# encoded_data = base64.b64encode(image_file.read())
+			# if we chose not to encode then simply...
+		encoded_data = image_file.read()
+	# filesize = len(encoded_data) #in bytes!
+	filesize = len(encoded_data)
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
 
@@ -78,6 +79,7 @@ def __request_text(input_data):
 
 
 def __request_translation(args, input_data, request_msg):
+	import pdb; pdb.set_trace()
 	"""Return ipaddress an ipport to later connected with TRS server"""
 	log.debug("looking for the IP/port connection to TRS Server!")
 	udp = UDP(args.tcs_name, args.tcs_port)
