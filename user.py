@@ -5,13 +5,11 @@ import sys
 import settings
 import argparse
 import socket
-from protocols import UDP
+from protocols import UDP, TCP
 from utils import Logger
 import base64
 log = Logger(debug=settings.DEBUG)
 
-TCS_NAME = "tejo" #SET THESE IN MAIN PLZ
-TCS_PORT = "12345" #SET THESE IN MAIN PLZ
 
 def _list(args):
 	"""Method that handles the list functionality"""
@@ -19,73 +17,63 @@ def _list(args):
 	response = udp.request("ULQ\n")
 	# make pretty response
 	data = response.split()
-	print("Got {} languages:".format(data[1]))
-	for i, lang in enumerate(data[2:], 1):
-		print("{}. {}".format(i, lang))
+	if "ERR" in data:
+		log.error("Error: No valid response was returned.")
+	else:
+		print("Got {} languages:".format(data[1]))
+		for i, lang in enumerate(data[2:], 1):
+			print("{}. {}".format(i, lang))
 
 
-def _request(input_data):
+def _request(args, input_data):
 	"""Method that handles the request functionality"""
 	try:
-		# import pdb;pdb.set_trace()
+		# split data into variable
 		input_data = input_data.split()
 		language = int(input_data[1])
 		type = input_data[2]
 		if type == "t":
-			_request_text(input_data[2:],language)
+			words = input_data[3:]
+			num_words = len(words)
+			if num_words == 0:
+				raise ValueError("No words were given to be translated.")
+			request_msg = "TRQ t {} {}\n".format(num_words, " ".join(words))
 		elif type == "f":
-			_request_file(input_data[2:],language)
+			filename = input_data[3]
+			file = open(filename, 'r')
+			encoded_data = base64.b64encode(file.readlines())
+			filesize = len(encoded_data) #in bytes!
+			request_msg = "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 		else:
+			# not valid request type
 			raise SyntaxError
-	except (SyntaxError, ValueError):
-		log.warning("You're probably not using the correct formating, please use:\n request n t W1 W2 ... WN\n or \n request n f filename ")
-		pass
-	pass
+	except (IOError), e:
+		log.error("File \"{}\" not found!".format(filename))
+		return
+	except (SyntaxError, ValueError, IndexError), e:
+		log.error(e.message)
+		log.warning("You're probably not using the correct formating, "
+				    "please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
+		return
+	import pdb; pdb.set_trace()
+	# get language from tcs server
+	log.debug("looking for the IP/port connection to TRS Server!")
+	udp = UDP(args.tcs_name, args.tcs_port)
+	response = udp.request("UNQ {}\n".format(int(input_data[1])))
+	data = response.split()
+	# validate response
+	if "ERR" in data:
+		log.error("Message not well formated!")
+		return
+	elif "EOF" in data:
+		log.error("Invalid language ID")
+		return
 
-def _find_TCP_server(language):
-	"""Find the TCP server I'm going to communicate with for the language given as a parametre"""
-	log.info("looking for the TCP server!")
-	message_to_TCS = "UNQ " + LANGUAGE_ARRAY[language] + "\n"
-	try:
-		udp = UDP(TCS_NAME, TCS_PORT)
-		TCS_answer = udp.request(message_to_TCS)
-		print response
-	except:
-		log.error("Error with the bloody TCS connection mate!")
-	TCS_answer= TCS_answer.split() #TODO
-	if not TCS_answer.startswith("UNR"):
-		log.error("We got a really weird message back from the TCS server!")
-		log.info(TCS_answer)
-	elif TCS[1] != LANGUAGE_ARRAY[language]:
-		log.error("We seem to be having a problem here, I want to speak in" + LANGUAGE_ARRAY[language] + " but the server understood it as " + TCS[1] + "\n")
-	return TCS_answer
-
-def _request_text(input,language):
-	"""Requesting a text translation (TCP)"""
-	log.info("requesting text!")
-	number_of_words = len(input)
-	TCS_info = _find_TCP_server(language)
-	try:
-		TCPtname = TCS_info[2]
-		TCPport = TCS_info[3]
-		message_to_TRS = "TRQ t "+ number_of_words+" " + " ".join(str(x) for x in input) + "\n"
-	except:
-		log.error("TCS server sent us a message with the wrong size. BAD TCS!")
-	pass
-	#SEND MESSAGE WITH TCP
-
-def _request_file(filename,language):
-	"""Requesting a file translation! (TCP)"""
-	log.info("requesting a file!")
-	try:
-		file = open(filename)
-		#WE'RE GOING TO USE BASE 64 FOR FILE TRANSFER. THIS IS REALLY IMPORTANT PAY ATTENTION!!!!!!!!!!!!!!
-		encoded_data = base64.b64encode(file.readlines())
-		filesize = len(encoded_data) #in bytes!
-		message_to_TCP = "TRQ f " + filename + " " + filesize + " " + encoded_data + "\n"
-		#actually send the data through TCP to TCR
-	except:
-		log.error("Couldn't open the file mate!")
+	trs_ipaddress = data[1]
+	trs_ipport = data[2]
+	# and request translation
+	udp = UDP(args.tcs_name, args.tcs_port)
+	response = udp.request(request_msg)
 
 
 if __name__ == "__main__":
@@ -112,7 +100,7 @@ if __name__ == "__main__":
 		elif input_data.startswith('request'):
 			# request - request translation for given language
 			log.debug("request - Requesting translation for given arguments")
-			_request(input_data)
+			_request(args, input_data)
 		elif input_data == 'exit':
 			# exit - exit user application
 			log.debug("exit - Exiting user application.")

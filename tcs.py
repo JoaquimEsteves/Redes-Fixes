@@ -131,23 +131,23 @@ class TCSHandler(object):
         if num_languages == 0:
             # no languages (TRS Servers) available
             return "ULR EOF"
-
         return "ULR {} {}".format(num_languages, " ".join(languages)).strip()
 
     def _UNQ(self, data):
         """Get IpAddress and IpPort from given language (TRS) server"""
         log.debug("[UNQ] with data=\"{}\"".format(data))
         try:
-            language = data[0]
-            row = self.DB.get_row(language)
+            language = int(data[0])
+            row = self.DB.get_rows()[language]
             ipaddress, ipport = row[1], row[2]
         except IndexError, e:
+            # Invalid request. Not well formated
             log.error(e.message)
             return "UNR ERR"
         except Exception, e:
+            # Invalid request for inexisting language
             log.error(e.message)
             return "UNR EOF"
-
         return "UNR {} {}".format(ipaddress, ipport)
 
     def _SRG(self, data):
