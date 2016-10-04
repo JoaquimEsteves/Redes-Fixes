@@ -4,7 +4,7 @@ import os
 import sys
 import settings
 import argparse
-from socket import inet_aton
+from socket import inet_aton, error as SocketError
 from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
@@ -20,7 +20,7 @@ class DBWrapper(object):
 
     def get_rows(self):
         """Return list of rows from db_path "database" """
-        with open(self.db_path, 'r') as db:
+        with open(self.db_path, 'r+') as db:
             db = db.readlines()
         # clean row and slice it into array
         db = [row.rstrip().split("\t") for row in db]
@@ -54,8 +54,10 @@ class DBWrapper(object):
         # check if ipaddress is in correct format
         try:
             # valid
-            inet_aton(addr)
-        except socket.error:
+            if ipaddress == 'localhost':
+                ipaddress = '127.0.0.1'
+            inet_aton(ipaddress)
+        except SocketError, e:
             # invalid
             raise Exception("IpAddress \"{}\" is not valid!".format(ipaddress))
         # check if ipport is in correct format
@@ -68,7 +70,7 @@ class DBWrapper(object):
             raise Exception("IpPort \"{}\" doesn't have a valid range!".format(ipport))
         # append line into file
         with open(self.db_path, 'a') as db:
-            line = "\t".join([language, ipaddress, ipport])
+            line = "\t".join(map(str, [language, ipaddress, ipport]))
             db.write(line + "\n")
 
     def remove_trs_server(self, language=None, ipaddress=None, ipport=None):
@@ -137,8 +139,8 @@ class TCSHandler(object):
         """Get IpAddress and IpPort from given language (TRS) server"""
         log.debug("[UNQ] with data=\"{}\"".format(data))
         try:
-            language = int(data[0])
-            row = self.DB.get_rows()[language]
+            language = data[0]
+            row = self.DB.get_row(language)
             ipaddress, ipport = row[1], row[2]
         except IndexError, e:
             # Invalid request. Not well formated
