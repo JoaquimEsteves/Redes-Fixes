@@ -7,6 +7,7 @@ import argparse
 from socket import error as SocketError
 from protocols import UDP, TCP
 from utils import Logger
+import base64
 log = Logger(debug=settings.DEBUG)
 
 
@@ -55,14 +56,23 @@ class TRSHandler(object):
 			return "ERR"
 	
 	def _TRQtext(data):
-		
+		pass
 	def _TRQfile(data):
 		filesize = data[1]
 		encoded_data = data[2]
 		if len(encoded_data) != filesize:
 			log.error("Our file seems to be missing a few bytes!")
 			return "ERR"
-
+		with open("Output.png", "w") as my_file: #check to see if the pictures are the same!
+			my_file.write(base64.b64decode(encoded_data))
+		#well then, now that everything is in order!
+		filename = "pyrion.PNG" #just an example...
+		with open("pyrion.PNG", "rb") as image_file:
+			send_data = base64.b64encode(image_file.read())
+			new_filesize = len(encoded_data) #in bytes!
+		return "TRQ f {} {} {}\n".format(filename, new_filesize, send_data)
+		
+		
 if __name__ == "__main__":
 	log.info("Starting TRS server...")
 	# format of command is ./trs language [-p TRSport] [-n TCSname] [-e TCSport],

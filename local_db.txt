@@ -1,4 +1,1 @@
-Frances	localhost	51234
-Italiano	localhost	59999
-Ingles	localhost	59000
-DankMemes	127.0.0.1	59000
+memes	127.0.0.1	58002
