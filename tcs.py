@@ -9,7 +9,6 @@ from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
 
-
 class DBWrapper(object):
     """Fake db manipulation. Collection of methods that manipulate
     the settings.DB_PATH txt file"""
@@ -17,6 +16,9 @@ class DBWrapper(object):
     def __init__(self, db_path=settings.DB_PATH):
         """Set basic variables"""
         self.db_path = db_path
+        if not os.path.isfile(self.db_path):
+            with open(self.db_path, 'w+') as db:
+                db.write("")
 
     def get_rows(self):
         """Return list of rows from db_path "database" """
@@ -204,4 +206,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt, e:
         # if CTRL+C is pressed, then go for last step
         log.info("Exiting TCS Server...")
+
         pass

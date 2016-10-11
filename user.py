@@ -30,7 +30,7 @@ def _list(args):
 
 def _saveTCPFile(data):
 	with open("from_TCP_with_love.png", "w") as my_file: #check to see if the pictures are the same!
-			my_file.write(base64.b64decode(data[2]))
+		my_file.write(base64.b64decode(data[2]))
 
 def _request(args, input_data):
 	"""Method that handles the request functionality"""
@@ -64,9 +64,6 @@ def __request_file(input_data):
 	filename = input_data[3]
 	with open(filename, "rb") as image_file:
 		encoded_data = base64.b64encode(image_file.read())
-			# if we chose not to encode then simply...
-		#encoded_data = image_file.read()
-	# filesize = len(encoded_data) #in bytes!
 	filesize = len(encoded_data)
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
@@ -100,17 +97,23 @@ def __request_translation(args, input_data, request_msg):
 	elif "EOF" in data:
 		log.error("Invalid language ID")
 		return
+
 	trs_ipaddress = data[1]
 	trs_ipport = data[2]
 	# and request translation
 	tcp = TCP(trs_ipaddress, trs_ipport)
 	response = tcp.request(request_msg)
 	data = response.split()
-	#special case...
+
 	if data[1] == 'f':
 		log.info("How lovely, the TCP has sent us a file!, let's save it")
 		_saveTCPFile(data[2:])
-	return trs_ipaddress + ": " + ", ".join(data[3:])
+		message = "Got back translated file from {}".format(trs_ipaddress)
+	elif data[1] == 't':
+		# TODO:
+		message = "Got back translated text from {}".format(trs_ipaddress)
+
+	return message
 
 
 if __name__ == "__main__":

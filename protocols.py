@@ -111,12 +111,12 @@ class TCP(Protocol):
             sock.connect((self.host, self.port))
             # define timout to settings.TIMEOUT_DELAY
             sock.settimeout(settings.TIMEOUT_DELAY)
-            log.debug("[TCP] Sending request to {}:{} > \"{}\".".format(self.host, self.port, self._remove_new_line(data)))
+            log.debug("[TCP] Sending request to {}:{} > \"{}\".".format(self.host, self.port, self._remove_new_line(data)[:64]))
             # Send data to the socket.
             sock.sendall(data)
             # Receive data from the socket (max amount is the buffer size).
             data = sock.recv(self.buffer_size)
-            log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(data)))
+            log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(data)[:64]))
         # in case of timeout
         except timeout, msg:
             log.error("[TCP] Request Timeout.")
@@ -159,13 +159,13 @@ class TCP(Protocol):
                     # Receive data from socket
                     data = connection.recv(self.buffer_size)
                     if data:
-                        log.debug("Got request from {}:{} > \"{}\".".format(addr_ip, addr_port, self._remove_new_line(data)))
+                        log.debug("Got request from {}:{} > \"{}\".".format(addr_ip, addr_port, self._remove_new_line(data)[:64]))
 
                         if not handler:
                             raise ValueError("Handler is required!")
                         data = handler.dispatch(data)
 
-                        log.debug("Sending back > \"{}\".".format(self._remove_new_line(data)))
+                        log.debug("Sending back > \"{}\".".format(self._remove_new_line(data)[:64]))
                         # Send data to the socket.
                         connection.sendall(data)
                     else:
