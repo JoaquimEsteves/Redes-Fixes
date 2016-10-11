@@ -46,8 +46,8 @@ def _request(args, input_data):
 		else:
 			# not valid request type
 			raise SyntaxError
-	except (IOError), e:
-		log.error("File \"{}\" not found!".format(filename))
+	except (IOError, NameError), e:
+		log.error("File \"{}\" not found!".format(input_data[3]))
 		return
 	except (SyntaxError, ValueError, IndexError), e:
 		log.error(e.message)
