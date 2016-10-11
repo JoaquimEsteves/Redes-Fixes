@@ -29,8 +29,11 @@ def _list(args):
 			print("{}. {}".format(i, lang))
 
 def _saveTCPFile(data):
-	with open("from_TCP_with_love.png", "w") as my_file: #check to see if the pictures are the same!
-			my_file.write(base64.b64decode(data[2]))
+	filename = data[0]
+	data = data[2]
+	# save file
+	with open(filename, "w") as my_file:
+		my_file.write(base64.b64decode(data))
 
 def _request(args, input_data):
 	"""Method that handles the request functionality"""
@@ -38,10 +41,12 @@ def _request(args, input_data):
 		# split data into variable
 		input_data = input_data.split()
 		language = int(input_data[1])
-		type = input_data[2]
-		if type == "t":
+		ttype = input_data[2]
+
+		if ttype == "t":
 			request_msg = __request_text(input_data)
-		elif type == "f":
+		elif ttype == "f":
+			filename = input_data[3]
 			request_msg = __request_file(input_data)
 		else:
 			# not valid request type
@@ -50,13 +55,12 @@ def _request(args, input_data):
 		log.error("File \"{}\" not found!".format(input_data[3]))
 		return
 	except (SyntaxError, ValueError, IndexError), e:
-		log.error(e.message)
+		log.error(e)
 		log.warning("You're probably not using the correct formating, "
 					"please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
 		return
 	# get language from tcs server
-	translation = __request_translation(args, input_data, request_msg)
-	print translation
+	print __request_translation(args, input_data, request_msg)
 
 
 def __request_file(input_data):
@@ -64,9 +68,6 @@ def __request_file(input_data):
 	filename = input_data[3]
 	with open(filename, "rb") as image_file:
 		encoded_data = base64.b64encode(image_file.read())
-			# if we chose not to encode then simply...
-		#encoded_data = image_file.read()
-	# filesize = len(encoded_data) #in bytes!
 	filesize = len(encoded_data)
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
@@ -100,17 +101,33 @@ def __request_translation(args, input_data, request_msg):
 	elif "EOF" in data:
 		log.error("Invalid language ID")
 		return
+
 	trs_ipaddress = data[1]
 	trs_ipport = data[2]
 	# and request translation
 	tcp = TCP(trs_ipaddress, trs_ipport)
 	response = tcp.request(request_msg)
 	data = response.split()
-	#special case...
-	if data[1] == 'f':
-		log.info("How lovely, the TCP has sent us a file!, let's save it")
-		_saveTCPFile(data[2:])
-	return trs_ipaddress + ": " + ", ".join(data[3:])
+
+	if "ERR" in data:
+		log.error("Error: No valid response was returned.")
+	elif "NTA" in data:
+		log.error("Error: No translations were found for given request.")
+	else:
+		# go translations
+		message = ""
+		if data[1] == 'f':
+			log.info("How lovely, the TRS has sent us a file!")
+			_saveTCPFile(data[2:])
+			message = "Got back translated file from {}:\n{} ({} bytes)".format(trs_ipaddress,
+				data[2], data[3])
+		elif data[1] == 't':
+			log.info("How lovely, the TRS has sent us translated text!")
+			message = "Got back translated text from {}:\n{}".format(
+				trs_ipaddress, " ".join(data[3:]))
+		else:
+			log.error("Unexpected response from TRS Server. Response: {}".format(data))
+		return message
 
 
 if __name__ == "__main__":

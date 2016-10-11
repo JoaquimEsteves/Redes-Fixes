@@ -1,0 +1,23 @@
+Browser	browser
+Domain	dominio
+E-mail Address	indirizzo e-mail
+Extension	estensione
+Feature	funzione
+Follow	segui
+Follower	chi ti segue
+Help Center	Centro assistenza
+Hi	Ciao
+Hide	nascondere
+Inbox	casella di posta
+Language	lingua
+Log in	accedere
+Log off	disconnettersi
+Log out	disconnettersi
+Login	login
+Logout	logout
+Shut Down	spegnere
+Stories	storie
+Story	storia
+Topic	argomento
+Topics	argomenti
+Save	Salva

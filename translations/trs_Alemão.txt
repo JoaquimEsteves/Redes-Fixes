@@ -1,0 +1,23 @@
+Boards	Pinnwände
+Domain	Domain
+E-mail Address	E-Mail-Adresse
+Extension	Extension
+Feature	Feature
+Follow	Folgen
+Follower	Follower
+Help Center	Hilfe-Center
+Hi	Hallo
+Hide	Ausblenden
+Inbox	Posteingang
+Language	Sprache
+Log in	Anmelden
+Log off	Abmelden
+Log out	Abmelden
+Login	Anmelden
+Logout	Abmelden
+Shut Down	Abschalten
+Stories	Geschichten
+Story	Geschichte
+Topic	Thema
+Topics	Themen
+Save	Speichern

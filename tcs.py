@@ -9,7 +9,6 @@ from protocols import UDP
 from utils import Logger
 log = Logger(debug=settings.DEBUG)
 
-
 class DBWrapper(object):
     """Fake db manipulation. Collection of methods that manipulate
     the settings.DB_PATH txt file"""
@@ -17,6 +16,16 @@ class DBWrapper(object):
     def __init__(self, db_path=settings.DB_PATH):
         """Set basic variables"""
         self.db_path = db_path
+        # make sure file is only created when needed.
+        self.close()
+        # make sure file exist
+        with open(settings.DB_PATH, 'w+') as db:
+            db.write("")
+
+    def close(self):
+        """Remove self.db_path local file"""
+        if os.path.isfile(self.db_path):
+            os.remove(self.db_path)
 
     def get_rows(self):
         """Return list of rows from db_path "database" """
@@ -144,11 +153,11 @@ class TCSHandler(object):
             ipaddress, ipport = row[1], row[2]
         except IndexError, e:
             # Invalid request. Not well formated
-            log.error(e.message)
+            log.error(e)
             return "UNR ERR"
         except Exception, e:
             # Invalid request for inexisting language
-            log.error(e.message)
+            log.error(e)
             return "UNR EOF"
         return "UNR {} {}".format(ipaddress, ipport)
 
@@ -162,14 +171,16 @@ class TCSHandler(object):
             language_exists = self.DB.has_language(language)
             # check if Language Limit was already exceded.
             max_db_limit = len(self.DB.get_rows()) > settings.DB_LANGUAGE_MAX_LIMIT
-            if not language_exists and not max_db_limit:
+            # check if language is valid
+            language_is_valid = language in settings.ACCEPTED_LANGUAGES
+            if not language_exists and not max_db_limit and language_is_valid:
                 self.DB.add_trs_server(language, ipaddress, ipport)
             else:
-                raise Exception("Language \"{}\" already register. (DB row count = {})".format(
+                raise Exception("Language \"{}\" already register or not valid. (DB row count = {})".format(
                     language, len(self.DB.get_rows())))
             status = "OK"
         except Exception, e:
-            log.error(e.message)
+            log.error(e)
             status = "NOK"
         return "SRR {}".format(status)
 
@@ -182,7 +193,7 @@ class TCSHandler(object):
             self.DB.remove_trs_server(language, ipaddress, ipport)
             status = "OK"
         except Exception, e:
-            log.error(e.message)
+            log.error(e)
             status = "NOK"
         return "SUR {}".format(status)
 
@@ -197,11 +208,16 @@ if __name__ == "__main__":
     # print information just to make sure
     log.debug("Using TCS Port = {}.".format(args.tcs_port))
 
+    handler = TCSHandler()
     try:
         # running server
         udp = UDP(settings.DEFAULT_TCS_NAME, args.tcs_port)
-        udp.run(handler=TCSHandler())
+        udp.run(handler=handler)
     except KeyboardInterrupt, e:
         # if CTRL+C is pressed, then go for last step
         log.info("Exiting TCS Server...")
         pass
+    finally:
+        # remove db file
+        handler.DB.close()
+

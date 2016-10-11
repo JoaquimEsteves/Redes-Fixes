@@ -13,9 +13,10 @@ log = Logger(debug=settings.DEBUG)
 
 class TRSHandler(object):
 	"""Class to wrap all Endpoints for TRS messages."""
-	def __init__(self, host=settings.DEFAULT_TRS_NAME, port=settings.DEFAULT_TRS_PORT):
+	def __init__(self, language, host=settings.DEFAULT_TRS_NAME, port=settings.DEFAULT_TRS_PORT):
 		"""inits udp instance (TRS SERVER)"""
 		self.TCP = TCP(host, port)
+		self.language = language
 
 	def dispatch(self, data):
 		"""this method parses and checks for with feature is the "data" requesting
@@ -30,8 +31,6 @@ class TRSHandler(object):
 		protocol = data[0]
 		data = data[1:]
 		# dispatch to correct method
-		if protocol == "ULQ":
-			data = self._ULQ(data)
 		if protocol == "TRQ":
 			data = self._TRQ(data)
 		else:
@@ -40,41 +39,71 @@ class TRSHandler(object):
 		data += "\n"
 		return data
 
-	def _ULQ(self, data):
-		""""""
-		log.debug("[ULQ] with data=\"{}\"".format(data))
-		return "ULR 2 Ingles Frances\n"
-
 	def _TRQ(self,data):
 		"""Translation request!"""
-		type = data[0]
-		if type == "t":
+		ttype = data[0]
+		if ttype == "t":
 			return self._TRQtext(data[1:])
-		if type == "f":
-			data = data[1:]
-			return self._TRQfile(data)
-		else:
-			log.error("Got neither t nor an f from the input!")
-			return "ERR"
+		elif ttype == "f":
+			return self._TRQfile(data[1:])
 
-	def _TRQtext(self,data):
-		pass
+		log.error("Got neither t nor an f from the input!")
+		return "TRR ERR"
 
-	def _TRQfile(self,data):
-		#import pdb; pdb.set_trace()
+	def _TRQtext(self, data):
+		# data = [<num_words>, <words>]"
+		def _translate(word):
+			"""go to this TRS translation file and search for the given word translation"""
+			translate_file = settings.TRANSLATE_DB_FILENAME.format(self.language)
+			with open(translate_file, "r") as f:
+				for row in f.readlines():
+					source_word, target_word = row.rstrip().split("\t")
+					if word == source_word:
+						return target_word
+			return None
+		num_words = data[0]
+		words = data[1:]
+		# validations of input
+		try:
+			num_words = int(num_words)
+		except ValueError, e:
+			log.error("Number of words is not an integer!")
+			return "TRR ERR"
+		if num_words != len(words):
+			log.error("Number of words doesn't match with the amount of words given!")
+			return "TRR ERR"
+		if num_words > settings.TRANSLATE_MAX_LIMIT:
+			log.error("Only translate {} words per request!".format(settings.TRANSLATE_MAX_LIMIT))
+			return "TRR ERR"
+
+		# translate words
+		trans_words = list()
+		for w in words:
+			tw = _translate(w)
+			if tw is None:
+				return "TRR NTA"
+			trans_words.append(tw)
+
+		if num_words != len(trans_words):
+			log.error("This should never happen but ohwell")
+			return "TRR ERR"
+		return "TRR t {} {}".format(len(trans_words), " ".join(trans_words))
+
+
+	def _TRQfile(self, data):
+		"""Request file translation"""
+		filename = data[0]
 		filesize = data[1]
 		encoded_data = data[2]
 		if len(encoded_data) != int(filesize):
-			log.error("Our file seems to be missing a few bytes!")
-			return "ERR"
-		with open("Output.png", "w") as my_file: #check to see if the pictures are the same!
-			my_file.write(base64.b64decode(encoded_data))
-		#well then, now that everything is in order!
-		filename = "pyrion.PNG" #just an example...
-		with open("pyrion.PNG", "rb") as image_file:
+			log.error("File seems to be missing a few bytes!")
+			return "TRR ERR"
+
+		filename = ".".join(filename.split(".")[:-1]) + "_translated.png"
+		with open(filename, "rb") as image_file:
 			send_data = base64.b64encode(image_file.read())
 			new_filesize = len(encoded_data) #in bytes!
-		return "TRQ f {} {} {}\n".format(filename, new_filesize, send_data)
+		return "TRQ f {} {} {}".format(filename, new_filesize, send_data)
 
 
 if __name__ == "__main__":
@@ -102,7 +131,7 @@ if __name__ == "__main__":
 	if response == "SRR OK":
 		log.error("TCS Server register TRS Server \"{}\" successfully.".format(args.language))
 	elif response == "SRR NOK":
-		log.error("TCS Server was not able to register TRS Server \"{}\".".format(args.language))
+		log.error("TCS Server was not able to register TRS Server \"{}\". Already register.".format(args.language))
 		log.info("Exiting TRS Server...")
 		sys.exit()
 	else:
@@ -113,13 +142,13 @@ if __name__ == "__main__":
 	# 2º - keep TCP server running
 	try:
 		# keep TRS waiting for any incoming requests
-		tcp.run(handler=TRSHandler(settings.DEFAULT_TRS_NAME, args.trs_port))
+		tcp.run(handler=TRSHandler(args.language, settings.DEFAULT_TRS_NAME, args.trs_port))
 	except KeyboardInterrupt, e:
 		# if CTRL+C is pressed, then go for last step
-		log.info("Exiting TRS Server...")
+		log.info("Exiting TRS Server... {}".format(e))
 	except SocketError, e:
 		# if error is from "Address already in use", just go for last step
-		log.info("Exiting TRS Server...")
+		log.info("Exiting TRS Server... {}".format(e))
 
 	# 3º - when quiting connection, unregister this server from TCS database
 	response = udp.request("SUN {} {} {}\n".format(args.language, settings.DEFAULT_TRS_NAME, args.trs_port))
