@@ -1,83 +1,23 @@
-Acceptable Use Policy	Nutzungsbedingungen
-account	Konto
-Account Recovery Tool	Wiederherstellung des Kontos
-Account settings	Einstellungen des Kontos
-All about boards	Wissenswertes zu den Pinnwänden
-All about Pins	alles über Pins
-Analytics	Analytics
-Board	Pinnwand
 Boards	Pinnwände
-Browser	Browser
-Browser button	Browser-Button
-button	Button
-Cache	Cache
-Community Specialist	Community-Betreuung
-Content Policy	Richtlinien zum Inhalt
-Cookies	Cookies
 Domain	Domain
-E-mail	E-Mail
 E-mail Address	E-Mail-Adresse
-Email	E-Mail
 Extension	Extension
 Feature	Feature
-Feed	Feed
-Feedback	Feedback
-Finding things on Pinterest	Dinge auf Pinterest finden
 Follow	Folgen
 Follower	Follower
-Following and unfollowing	jemandem folgen oder nicht mehr folgen
-gear button	Zahnrad-Button
-gear icon	Zahnrad-Symbol
-Happy Pinning	frohes pinnen
 Help Center	Hilfe-Center
 Hi	Hallo
 Hide	Ausblenden
-Hide this Pin	diesen Pin ausblenden
-Home Feed	Start-Feed
 Inbox	Posteingang
-Index	Index
 Language	Sprache
 Log in	Anmelden
 Log off	Abmelden
 Log out	Abmelden
 Login	Anmelden
 Logout	Abmelden
-News notification	Meldung von Nachrichten
-Partner Operations	Partnerunternehmen
-Phishing	Phishing
-Pin	Pin
-Pinner	Pinner
-Pinners	Pinner
-Pins	Pins
-Pinterest	Pinterest
-Pinterest Analytics	Pinterest-Analytics
-Promoted Pins	Werbe-Pins
-Quick fixes to common problems	schnelle Lösungen für häufig auftretende Probleme
-Recommended stories	empfohlene Geschichten
-Recommended story	empfohlene Geschichte
-Remove	Entfernen
-Repin	Repin
-Rich Pins	detaillierte Pins
-Screenshot	Screenshot
-Search Bar	Suchleiste
-Search Box	Suchfeld
-Search Privacy	Datenschutz bei Suchvorgängen
-Setting	Einstellung
 Shut Down	Abschalten
-Spam	Spam
-Spammer	Spammer
 Stories	Geschichten
 Story	Geschichte
-Subscription	Abonnement
-Suspend	Sperren
-Tag	Tag
-tags	Tags
-Take Down	Entfernen
-to pin	pinnen
 Topic	Thema
 Topics	Themen
-Troubleshooting	Fehlerbehebung
-troubleshooting tips	Tipps zur Fehlerbehebung
-Widget	Widget
-Widgets	Widgets
 Save	Speichern
