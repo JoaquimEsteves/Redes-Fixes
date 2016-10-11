@@ -23,7 +23,7 @@ def _list(args):
 	if "ERR" in data:
 		log.error("Error: No valid response was returned.")
 	else:
-		print("Got {} languages:".format(data[1]))
+		print("Got {} languages:".format(int(data[1]) - 1)) #CAREFUL OF THIS
 		for i, lang in enumerate(data[2:], 1):
 			AVAILABLE_LANGUAGES.append(lang)
 			print("{}. {}".format(i, lang))
