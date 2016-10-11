@@ -80,7 +80,7 @@ class DBWrapper(object):
         updated_db = list()
         for row in rows:
             # check if current row is the one I want to delete
-            if row[0] == language and row[1] == ipaddress and row[2] == ipport:
+            if row[0] == language:
                 continue
             # if not, then just append it to "updated db" array
             updated_db.append(row)

@@ -28,6 +28,9 @@ def _list(args):
 			AVAILABLE_LANGUAGES.append(lang)
 			print("{}. {}".format(i, lang))
 
+def _saveTCPFile(data):
+	with open("from_TCP_with_love.png", "w") as my_file: #check to see if the pictures are the same!
+			my_file.write(base64.b64decode(data[2]))
 
 def _request(args, input_data):
 	"""Method that handles the request functionality"""
@@ -49,7 +52,7 @@ def _request(args, input_data):
 	except (SyntaxError, ValueError, IndexError), e:
 		log.error(e.message)
 		log.warning("You're probably not using the correct formating, "
-				    "please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
+					"please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
 		return
 	# get language from tcs server
 	translation = __request_translation(args, input_data, request_msg)
@@ -59,9 +62,12 @@ def _request(args, input_data):
 def __request_file(input_data):
 	"""Build request message to request file translation from TRS Server"""
 	filename = input_data[3]
-	file = open(filename, 'r')
-	encoded_data = base64.b64encode(file.readlines())
-	filesize = len(encoded_data) #in bytes!
+	with open(filename, "rb") as image_file:
+		encoded_data = base64.b64encode(image_file.read())
+			# if we chose not to encode then simply...
+		#encoded_data = image_file.read()
+	# filesize = len(encoded_data) #in bytes!
+	filesize = len(encoded_data)
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
 
@@ -75,6 +81,7 @@ def __request_text(input_data):
 
 
 def __request_translation(args, input_data, request_msg):
+	#import pdb; pdb.set_trace()
 	"""Return ipaddress an ipport to later connected with TRS server"""
 	log.debug("looking for the IP/port connection to TRS Server!")
 	udp = UDP(args.tcs_name, args.tcs_port)
@@ -99,6 +106,10 @@ def __request_translation(args, input_data, request_msg):
 	tcp = TCP(trs_ipaddress, trs_ipport)
 	response = tcp.request(request_msg)
 	data = response.split()
+	#special case...
+	if data[1] == 'f':
+		log.info("How lovely, the TCP has sent us a file!, let's save it")
+		_saveTCPFile(data[2:])
 	return trs_ipaddress + ": " + ", ".join(data[3:])
 
 

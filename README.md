@@ -1,9 +1,22 @@
 RC 2016
 Projecto "“Tradução RC"
 
-Nº ----- - Fred
+Para testar:
 
-Nº ----- - Quim
+TCS -> tejo.tecnico.ulisboa.pt : 58011
+TRS -> 193.136.138.142 : 59100
+
+if ctrl-c or exit plz remove from TCS server my friend!
+
+signals: 
+
+SIGINT
+SIGPIPE
+SIGALARM
+
+Nº 75966 - Frederico Moura
+
+Nº 77020 - Joaquim Esteves
 
 Nº 75455 - André Silva
 
