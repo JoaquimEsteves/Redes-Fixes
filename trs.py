@@ -43,7 +43,6 @@ class TRSHandler(object):
         return "ULR 2 Ingles Frances\n"
 
 
-
 if __name__ == "__main__":
     log.info("Starting TRS server...")
     # format of command is ./trs language [-p TRSport] [-n TCSname] [-e TCSport],
