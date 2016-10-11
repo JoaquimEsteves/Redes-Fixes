@@ -23,7 +23,7 @@ def _list(args):
 	if "ERR" in data:
 		log.error("Error: No valid response was returned.")
 	else:
-		print("Got {} languages:".format(data[1]))
+		print("Got {} languages:".format(int(data[1]) - 1)) #CAREFUL OF THIS
 		for i, lang in enumerate(data[2:], 1):
 			AVAILABLE_LANGUAGES.append(lang)
 			print("{}. {}".format(i, lang))
@@ -51,8 +51,8 @@ def _request(args, input_data):
 		else:
 			# not valid request type
 			raise SyntaxError
-	except (IOError), e:
-		log.error("File \"{}\" not found!".format(filename))
+	except (IOError, NameError), e:
+		log.error("File \"{}\" not found!".format(input_data[3]))
 		return
 	except (SyntaxError, ValueError, IndexError), e:
 		log.error(e)
