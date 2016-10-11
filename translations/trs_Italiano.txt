@@ -1,0 +1,83 @@
+Acceptable Use Policy	Politica d'Uso Accettabile
+account	account
+Account Recovery Tool	strumento di recupero dell'account
+Account settings	impostazioni dell'account
+All about boards	tutto sulle bacheche
+All about Pins	tutto sui Pin
+Analytics	dati analitici
+Board	bacheca
+Boards	bacheche
+Browser	browser
+Browser button	pulsante del browser
+button	pulsante
+Cache	cache
+Community Specialist	Specialista della comunità
+Content Policy	politica dei contenuti
+Cookies	cookie
+Domain	dominio
+E-mail	e-mail
+E-mail Address	indirizzo e-mail
+Email	e-mail
+Extension	estensione
+Feature	funzione
+Feed	feed
+Feedback	feedback
+Finding things on Pinterest	ricerca di contenuti su Pinterest
+Follow	segui
+Follower	chi ti segue
+Following and unfollowing	seguire e smettere di seguire
+gear button	pulsante dell'ingranaggio
+gear icon	icona dell'ingranaggio
+Happy Pinning	Divertiti a pinnare
+Help Center	Centro assistenza
+Hi	Ciao
+Hide	nascondere
+Hide this Pin	mantieni segreto questo Pin
+Home Feed	feed home
+Inbox	casella di posta
+Index	indicizzare
+Language	lingua
+Log in	accedere
+Log off	disconnettersi
+Log out	disconnettersi
+Login	login
+Logout	logout
+News notification	notifica delle novità
+Partner Operations	Partner Operations
+Phishing	phishing
+Pin	Pin
+Pinner	pinner
+Pinners	pinner
+Pins	Pin
+Pinterest	Pinterest
+Pinterest Analytics	Pinterest Analytics
+Promoted Pins	Pin sponsorizzati
+Quick fixes to common problems	soluzioni rapide per i problemi più comuni
+Recommended stories	storie raccomandate
+Recommended story	storia raccomandata
+Remove	rimuovere
+Repin	ripinnare
+Rich Pins	Pin dettagliati
+Screenshot	screenshot
+Search Bar	barra di ricerca
+Search Box	casella di ricerca
+Search Privacy	privacy della ricerca
+Setting	impostazione
+Shut Down	spegnere
+Spam	spam
+Spammer	spammer
+Stories	storie
+Story	storia
+Subscription	abbonamento
+Suspend	sospendere
+Tag	etichetta
+tags	etichette
+Take Down	spegnere
+to pin	pinnare
+Topic	argomento
+Topics	argomenti
+Troubleshooting	risoluzione dei problemi
+troubleshooting tips	consigli per la risoluzione dei problemi
+Widget	widget
+Widgets	widget
+Save	Salva

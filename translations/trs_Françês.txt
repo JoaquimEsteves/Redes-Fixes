@@ -1,0 +1,83 @@
+Acceptable Use Policy	Règles d'usage
+account	compte
+Account Recovery Tool	outil de récupération de compte
+Account settings	Paramètres du compte
+All about boards	Le b. a.-ba des tableaux
+All about Pins	Le b. a.-ba des épingles
+Analytics	Analytics
+Board	tableau
+Boards	tableaux
+Browser	moteur de recherche
+Browser button	bouton de navigateur
+button	bouton
+Cache	cache
+Community Specialist	Spécialiste de la communauté
+Content Policy	Règles en matière de contenus
+Cookies	cookies
+Domain	domaine
+E-mail	e-mail
+E-mail Address	adresse e-mail
+Email	e-mail
+Extension	extension
+Feature	fonctionnalité
+Feed	1
+Feedback	remarque
+Finding things on Pinterest	Recherche de contenus sur Pinterest
+Follow	Suivre
+Follower	abonné
+Following and unfollowing	Abonnement et désabonnement
+gear button	roue dentée
+gear icon	roue dentée
+Happy Pinning	Bon épinglage
+Help Center	Centre d'aide
+Hi	Bonjour
+Hide	masquer
+Hide this Pin	Masquer cette épingle
+Home Feed	page d'accueil
+Inbox	boîte de réception
+Index	index
+Language	langue
+Log in	se connecter
+Log off	se déconnecter
+Log out	se déconnecter
+Login	Se connecter
+Logout	se déconnecter
+News notification	Notifications d'actualités
+Partner Operations	Partner Operations
+Phishing	hameçonnage
+Pin	épingle
+Pinner	membre Pinterest
+Pinners	membres Pinterest
+Pins	épingles
+Pinterest	Pinterest
+Pinterest Analytics	Pinterest Analytics
+Promoted Pins	épingles sponsorisées
+Quick fixes to common problems	Solutions rapides aux problèmes courants
+Recommended stories	histoires recommandées
+Recommended story	histoire recommandée
+Remove	supprimer
+Repin	réépingle
+Rich Pins	épingles enrichies
+Screenshot	capture d'écran
+Search Bar	barre de recherche
+Search Box	champ de recherche
+Search Privacy	Protection contre l'indexation
+Setting	Paramètres
+Shut Down	éteindre
+Spam	Contenus indésirables
+Spammer	spammeur
+Stories	histoires
+Story	histoire
+Subscription	abonnement
+Suspend	suspendre
+Tag	balise
+tags	balises
+Take Down	clôturer
+to pin	épingler
+Topic	Sujet
+Topics	Sujets
+Troubleshooting	Résolution des problèmes
+troubleshooting tips	Conseils et résolution des problèmes
+Widget	Widget
+Widgets	Widgets
+Save	Enregistrer

@@ -1,0 +1,83 @@
+Acceptable Use Policy	Política de Uso Aceptable
+account	cuenta
+Account Recovery Tool	herramienta de recuperación de cuentas
+Account settings	Ajustes de la cuenta
+All about boards	Todo sobre los tableros
+All about Pins	Todo sobre los pines
+Analytics	Analytics
+Board	tablero
+Boards	tableros
+Browser	navegador
+Browser button	botón para el navegador
+button	botón
+Cache	caché
+Community Specialist	Especialista de la Comunidad
+Content Policy	Política de Contenido
+Cookies	cookies
+Domain	dominio
+E-mail	correo electrónico
+E-mail Address	dirección de correo electrónico
+Email	correo electrónico
+Extension	extensión
+Feature	función
+Feed	feed
+Feedback	comentarios
+Finding things on Pinterest	Buscar cosas en Pinterest
+Follow	seguir
+Follower	seguidor
+Following and unfollowing	Seguir y dejar de seguir
+gear button	botón del engranaje
+gear icon	icono del engranaje
+Happy Pinning	Que disfrutes tus pines
+Help Center	Centro de asistencia
+Hi	Hola
+Hide	ocultar
+Hide this Pin	Hacer que este pin sea secreto
+Home Feed	feed de inicio
+Inbox	bandeja de entrada
+Index	indexar
+Language	idioma
+Log in	iniciar sesión
+Log off	desconectarse
+Log out	cerrar sesión
+Login	iniciar sesión
+Logout	cerrar sesión
+News notification	actualización de novedades
+Partner Operations	Partner Operations
+Phishing	phishing
+Pin	pin
+Pinner	pineador
+Pinners	pineadores
+Pins	Pines
+Pinterest	Pinterest
+Pinterest Analytics	Pinterest Analytics
+Promoted Pins	Pines promocionales
+Quick fixes to common problems	Soluciones rápidas para problemas frecuentes
+Recommended stories	historias recomendadas
+Recommended story	historia recomendada
+Remove	eliminar
+Repin	volver a pinear
+Rich Pins	pines detallados
+Screenshot	captura de pantalla
+Search Bar	cuadro de búsqueda
+Search Box	campo de búsqueda
+Search Privacy	privacidad de la búsqueda
+Setting	Ajustes
+Shut Down	apagar
+Spam	spam
+Spammer	spammer
+Stories	historias
+Story	historia
+Subscription	suscripción
+Suspend	suspender
+Tag	etiqueta
+tags	etiquetas
+Take Down	eliminar
+to pin	pinear
+Topic	tema
+Topics	temas
+Troubleshooting	Resolución de problemas
+troubleshooting tips	Consejos para solucionar problemas
+Widget	widget
+Widgets	widgets
+Save	Guardar

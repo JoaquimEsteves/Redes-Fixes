@@ -41,14 +41,14 @@ class TRSHandler(object):
 
 	def _TRQ(self,data):
 		"""Translation request!"""
-		type = data[0]
-		if type == "t":
+		ttype = data[0]
+		if ttype == "t":
 			return self._TRQtext(data[1:])
-		if type == "f":
+		elif ttype == "f":
 			return self._TRQfile(data[1:])
-		else:
-			log.error("Got neither t nor an f from the input!")
-			return "TRR ERR"
+
+		log.error("Got neither t nor an f from the input!")
+		return "TRR ERR"
 
 	def _TRQtext(self, data):
 		# data = [<num_words>, <words>]"
@@ -57,12 +57,10 @@ class TRSHandler(object):
 			translate_file = settings.TRANSLATE_DB_FILENAME.format(self.language)
 			with open(translate_file, "r") as f:
 				for row in f.readlines():
-					import pdb; pdb.set_trace()
-					source_word, target_word = row.split("\t")
-					if words == source_word:
+					source_word, target_word = row.rstrip().split("\t")
+					if word == source_word:
 						return target_word
 			return None
-
 		num_words = data[0]
 		words = data[1:]
 		# validations of input
@@ -91,17 +89,17 @@ class TRSHandler(object):
 			return "TRR ERR"
 		return "TRR t {} {}".format(len(trans_words), " ".join(trans_words))
 
+
 	def _TRQfile(self, data):
+		"""Request file translation"""
 		filename = data[0]
 		filesize = data[1]
 		encoded_data = data[2]
 		if len(encoded_data) != int(filesize):
-			log.error("Our file seems to be missing a few bytes!")
+			log.error("File seems to be missing a few bytes!")
 			return "TRR ERR"
-		with open("Output.png", "w") as my_file: #check to see if the pictures are the same!
-			my_file.write(base64.b64decode(encoded_data))
-		# well then, now that everything is in order!
-		filename = "pyrion.PNG" #just an example...
+
+		filename = ".".join(filename.split(".")[:-1]) + "_translated.png"
 		with open(filename, "rb") as image_file:
 			send_data = base64.b64encode(image_file.read())
 			new_filesize = len(encoded_data) #in bytes!
@@ -133,7 +131,7 @@ if __name__ == "__main__":
 	if response == "SRR OK":
 		log.error("TCS Server register TRS Server \"{}\" successfully.".format(args.language))
 	elif response == "SRR NOK":
-		log.error("TCS Server was not able to register TRS Server \"{}\".".format(args.language))
+		log.error("TCS Server was not able to register TRS Server \"{}\". Already register.".format(args.language))
 		log.info("Exiting TRS Server...")
 		sys.exit()
 	else:
@@ -147,10 +145,10 @@ if __name__ == "__main__":
 		tcp.run(handler=TRSHandler(args.language, settings.DEFAULT_TRS_NAME, args.trs_port))
 	except KeyboardInterrupt, e:
 		# if CTRL+C is pressed, then go for last step
-		log.info("Exiting TRS Server...")
+		log.info("Exiting TRS Server... {}".format(e))
 	except SocketError, e:
 		# if error is from "Address already in use", just go for last step
-		log.info("Exiting TRS Server...")
+		log.info("Exiting TRS Server... {}".format(e))
 
 	# 3º - when quiting connection, unregister this server from TCS database
 	response = udp.request("SUN {} {} {}\n".format(args.language, settings.DEFAULT_TRS_NAME, args.trs_port))

@@ -25,7 +25,8 @@ TIMEOUT_DELAY = 15
 # Translated properties
 TRANSLATE_WORD_MAX_CHARS = 30
 TRANSLATE_MAX_LIMIT = 10
-TRANSLATE_DB_FILENAME = os.getcwd() + "/trs_{}.txt"
+TRANSLATE_DB_FILENAME = os.getcwd() + "/translations/trs_{}.txt"
+ACCEPTED_LANGUAGES = ['Português', 'Françês', 'Espanhol', 'Alemão', 'Italiano']
 
 # "Local Database" path
 DB_PATH = os.getcwd() + "/local_db.txt"

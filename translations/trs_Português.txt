@@ -1,0 +1,83 @@
+Acceptable Use Policy	Política de Utilização Aceitável
+account	Conta
+Account Recovery Tool	Ferramenta de Recuperação da Conta
+Account settings	Definições da conta
+All about boards	Tudo sobre álbuns
+All about Pins	Tudo sobre Pins
+Analytics	Analytics
+Board	Álbum
+Boards	Álbuns
+Browser	Navegador
+Browser button	Botão do navegador
+button	Botão
+Cache	Cache
+Community Specialist	Especialista da Comunidade
+Content Policy	Política de conteúdos
+Cookies	Cookies
+Domain	Domínio
+E-mail	E-mail
+E-mail Address	Endereço de e-mail
+Email	E-mail
+Extension	Extensão
+Feature	Funcionalidade
+Feed	Feed
+Feedback	Feedback
+Finding things on Pinterest	Encontrar coisas no Pinterest
+Follow	Seguir
+Follower	Seguidor
+Following and unfollowing	Seguir e deixar de seguir
+gear button	Botão Engrenagem
+gear icon	Botão Engrenagem
+Happy Pinning	Bons Pins
+Help Center	Centro de Ajuda
+Hi	Olá
+Hide	Ocultar
+Hide this Pin	Ocultar este Pin
+Home Feed	Feed da Página Principal
+Inbox	Caixa de Entrada
+Index	Indexar
+Language	Idioma
+Log in	Iniciar sessão
+Log off	Terminar sessão
+Log out	Terminar sessão
+Login	Início de sessão
+Logout	Fim de sessão
+News notification	Notificações de notícias
+Partner Operations	Partner Operations
+Phishing	Phishing
+Pin	pin
+Pinner	utilizador
+Pinners	utilizadores
+Pins	Pins
+Pinterest	Pinterest
+Pinterest Analytics	Pinterest Analytics
+Promoted Pins	Pins promocionais
+Quick fixes to common problems	Correções breves para problemas comuns
+Recommended stories	Histórias recomendadas
+Recommended story	História recomendada
+Remove	Remover
+Repin	Voltar a fazer Pin
+Rich Pins	Pins detalhados
+Screenshot	Captura de Ecrã
+Search Bar	Barra de Pesquisa
+Search Box	Caixa de Pesquisa
+Search Privacy	Privacidade da pesquisa
+Setting	Definição
+Shut Down	Encerrar
+Spam	Spam
+Spammer	Spammer
+Stories	Histórias
+Story	História
+Subscription	Subscrição
+Suspend	Suspender
+Tag	Identificação
+tags	Identificações
+Take Down	Encerrar
+to pin	Fazer Pin
+Topic	Tópico
+Topics	Tópicos
+Troubleshooting	Resolução de Problemas
+troubleshooting tips	Dicas de resolução de problemas
+Widget	Widget
+Widgets	Widgets
+Save	Guardar

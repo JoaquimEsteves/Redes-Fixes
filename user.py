@@ -29,8 +29,11 @@ def _list(args):
 			print("{}. {}".format(i, lang))
 
 def _saveTCPFile(data):
-	with open("from_TCP_with_love.png", "w") as my_file: #check to see if the pictures are the same!
-		my_file.write(base64.b64decode(data[2]))
+	filename = data[0]
+	data = data[2]
+	# save file
+	with open(filename, "w") as my_file:
+		my_file.write(base64.b64decode(data))
 
 def _request(args, input_data):
 	"""Method that handles the request functionality"""
@@ -38,10 +41,12 @@ def _request(args, input_data):
 		# split data into variable
 		input_data = input_data.split()
 		language = int(input_data[1])
-		type = input_data[2]
-		if type == "t":
+		ttype = input_data[2]
+
+		if ttype == "t":
 			request_msg = __request_text(input_data)
-		elif type == "f":
+		elif ttype == "f":
+			filename = input_data[3]
 			request_msg = __request_file(input_data)
 		else:
 			# not valid request type
@@ -50,13 +55,12 @@ def _request(args, input_data):
 		log.error("File \"{}\" not found!".format(filename))
 		return
 	except (SyntaxError, ValueError, IndexError), e:
-		log.error(e.message)
+		log.error(e)
 		log.warning("You're probably not using the correct formating, "
 					"please use: \"request n t W1 W2 ... WN\" or \"request n f filename\"")
 		return
 	# get language from tcs server
-	translation = __request_translation(args, input_data, request_msg)
-	print translation
+	print __request_translation(args, input_data, request_msg)
 
 
 def __request_file(input_data):
@@ -105,15 +109,25 @@ def __request_translation(args, input_data, request_msg):
 	response = tcp.request(request_msg)
 	data = response.split()
 
-	if data[1] == 'f':
-		log.info("How lovely, the TCP has sent us a file!, let's save it")
-		_saveTCPFile(data[2:])
-		message = "Got back translated file from {}".format(trs_ipaddress)
-	elif data[1] == 't':
-		# TODO:
-		message = "Got back translated text from {}".format(trs_ipaddress)
-
-	return message
+	if "ERR" in data:
+		log.error("Error: No valid response was returned.")
+	elif "NTA" in data:
+		log.error("Error: No translations were found for given request.")
+	else:
+		# go translations
+		message = ""
+		if data[1] == 'f':
+			log.info("How lovely, the TRS has sent us a file!")
+			_saveTCPFile(data[2:])
+			message = "Got back translated file from {}:\n{} ({} bytes)".format(trs_ipaddress,
+				data[2], data[3])
+		elif data[1] == 't':
+			log.info("How lovely, the TRS has sent us translated text!")
+			message = "Got back translated text from {}:\n{}".format(
+				trs_ipaddress, " ".join(data[3:]))
+		else:
+			log.error("Unexpected response from TRS Server. Response: {}".format(data))
+		return message
 
 
 if __name__ == "__main__":

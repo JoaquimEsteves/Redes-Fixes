@@ -45,7 +45,7 @@ class UDP(Protocol):
         # in case of timeout
         except timeout, msg:
             # TODO: Maybe retry 3 times
-            log.error("[UDP] Request Timeout.")
+            log.error("[UDP] Request Timeout. {}".format(msg))
             data = "ERR"
         # in case of error
         except error, msg:
@@ -119,7 +119,7 @@ class TCP(Protocol):
             log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(data)[:64]))
         # in case of timeout
         except timeout, msg:
-            log.error("[TCP] Request Timeout.")
+            log.error("[TCP] Request Timeout. {}".format(msg))
             data = "ERR"
         # in case of error
         except error, msg:
