@@ -7,7 +7,6 @@ import argparse
 from socket import error as SocketError
 from protocols import UDP, TCP
 from utils import Logger
-import base64
 log = Logger(debug=settings.DEBUG)
 
 
@@ -104,7 +103,7 @@ class TRSHandler(object):
 
 		filename = data[0]
 		filesize = data[1]
-		encoded_data = data[2]
+		encoded_data = " ".join(data[2:])
 		if len(encoded_data) != int(filesize):
 			log.error("File seems to be missing a few bytes!")
 			return "TRR ERR"
@@ -113,8 +112,8 @@ class TRSHandler(object):
 		if tf is None:
 			return "TRR NTA"
 
-		with open(tf, "rb") as image_file:
-			send_data = base64.b64encode(image_file.read())
+		with open(tf, "r") as image_file:
+			send_data = image_file.read()
 			new_filesize = len(encoded_data)  #in bytes!
 		return "TRQ f {} {} {}".format(filename, new_filesize, send_data)
 

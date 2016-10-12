@@ -7,7 +7,6 @@ import argparse
 import socket
 from protocols import UDP, TCP
 from utils import Logger
-import base64
 log = Logger(debug=settings.DEBUG)
 
 
@@ -35,7 +34,7 @@ def _saveTCPFile(data):
 	data = data[2]
 	# save file
 	with open(filename, "w") as my_file:
-		my_file.write(base64.b64decode(data))
+		my_file.write(data)
 
 def _request(args, input_data):
 	"""Method that handles the request functionality"""
@@ -68,8 +67,8 @@ def _request(args, input_data):
 def __request_file(input_data):
 	"""Build request message to request file translation from TRS Server"""
 	filename = input_data[3]
-	with open(filename, "rb") as image_file:
-		encoded_data = base64.b64encode(image_file.read())
+	with open(filename, "r") as image_file:
+		encoded_data = image_file.read()
 	filesize = len(encoded_data)
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
