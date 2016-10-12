@@ -6,29 +6,29 @@ Nº 75966 - Frederico Moura
 
 Nº 77020 - Joaquim Esteves
 
-Visto que o projecto está em Python, não é convencional criar uma makefile, então, de forma a correr o **user.py**, **tsc.py** e **trs.py** apenas tem de ser executado o seguinte comando para cada ficheiro:
+Visto que o projecto está na linguagem **Python**, não é convencional criar uma makefile, então, de forma a correr o **user**, **tcs** e **trs** apenas tem de ser executado o seguinte comando para cada ficheiro:
 
 ```shell
 $ python <nome_do_ficheiro>.py [commandos]
 ```
 
-ou seja, testando cada ficheiro em separadores do terminal diferentes usariamos ou em maquinas diferentes:
+ou seja, executando cada aplicação em separadores do terminal ou em maquinas diferentes:
 
 ```shell
-// Separador #1
+# Separador nº1
 $ python user.py [-n TCSname] [-p TCSport]
 
-// Separador #2
+# Separador nº2
 $ python tcs.py [-p TCSport]
 
-// Separador #3
+# Separador nº3
 $ python trs.py language [-p TRSport] [-n TCSname] [-e TCSport]
 ```
 
-## Available Languages
-Nesta versão do projecto disponibilizamos a prossibilidade de existir 5 TRS a correr em paralelo, cada um a servir traduções para apenas uma lingua. Notar que todas as traduções são de **Português** para *target_language*.
+## Linguas Disponivels
+Nesta versão do projecto existem traduções que suportam **até 5 TRS** a correr em paralelo, cada um a servir traduções para apenas uma lingua. Notar que todas as traduções são de **Português** para *target_language*.
 
-#### Lista de Linguas
+## Lista de Linguas
 - Alemão
 - Inglês
 - Françês
