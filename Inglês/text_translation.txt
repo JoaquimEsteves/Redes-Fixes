@@ -1,0 +1,15 @@
+browser	navegador
+domain	domínio
+extension	extensão
+feature	funcionalidade
+follow	seguir
+follower	seguidor
+hi	olá
+hide	ocultar
+language	idioma
+shut down	encerrar
+stories	histórias
+story	história
+topic	tópico
+topics	tópicos
+save	guardar

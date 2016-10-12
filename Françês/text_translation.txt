@@ -1,0 +1,15 @@
+tableaux	navegador
+domaine	domínio
+extension	extensão
+fonctionnalité	funcionalidade
+suivre	seguir
+abonné	seguidor
+bonjour	olá
+masquer	ocultar
+langue	idioma
+éteindre	encerrar
+histoires	histórias
+histoire	história
+sujet	tópico
+sujets	tópicos
+enregistrer	guardar

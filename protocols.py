@@ -149,27 +149,34 @@ class TCP(Protocol):
             raise error
 
         log.info("TCP Server is ready for connection on [{}:{}].".format(self.host, self.port))
+
         while True:
             # Accept a connection.
             connection, client_address = sock.accept()
             # Get connection HostIP and HostPORT
             addr_ip, addr_port = client_address
             try:
-                while True:
-                    # Receive data from socket
-                    data = connection.recv(self.buffer_size)
-                    if data:
-                        log.debug("Got request from {}:{} > \"{}\".".format(addr_ip, addr_port, self._remove_new_line(data)[:64]))
+                # Receive data from socket
+                data = ""
+                data_connection = connection.recv(self.buffer_size)
+                while data_connection[-1] != "\n":
+                    data += data_connection
+                    log.debug("Received {} bytes".format(len(data)))
+                    data_connection = connection.recv(self.buffer_size)
+                data += data_connection
 
-                        if not handler:
-                            raise ValueError("Handler is required!")
-                        data = handler.dispatch(data)
+                log.debug("Got request from {}:{} > \"{}\".".format(addr_ip, addr_port, self._remove_new_line(data_connection)[:64]))
 
-                        log.debug("Sending back > \"{}\".".format(self._remove_new_line(data)[:64]))
-                        # Send data to the socket.
-                        connection.sendall(data)
-                    else:
-                        break
+                if data:
+                    if not handler:
+                        raise ValueError("Handler is required!")
+                    data = handler.dispatch(data)
+
+                    log.debug("Sending back > \"{}\".".format(self._remove_new_line(data)[:64]))
+                    # Send data to the socket.
+                    connection.sendall(data)
+                else:
+                    break
             finally:
                 # Close socket connection
                 connection.close()

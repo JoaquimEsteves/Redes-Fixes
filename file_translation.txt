@@ -1,0 +1,5 @@
+pyrion_Inglês.png	pyrion.png
+pyrion_Françês.png	pyrion.png
+pyrion_Espanhol.png	pyrion.png
+pyrion_Alemão.png	pyrion.png
+pyrion_Italiano.png	pyrion.png

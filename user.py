@@ -22,14 +22,16 @@ def _list(args):
 	data = response.split()
 	if "ERR" in data:
 		log.error("Error: No valid response was returned.")
+	elif "EOF" in data:
+		log.error("Error: No languages available.")
 	else:
-		print("Got {} languages:".format(int(data[1]) - 1)) #CAREFUL OF THIS
+		print("Got {} languages:".format(int(data[1])))
 		for i, lang in enumerate(data[2:], 1):
 			AVAILABLE_LANGUAGES.append(lang)
 			print("{}. {}".format(i, lang))
 
 def _saveTCPFile(data):
-	filename = data[0]
+	filename = data[0] + "DOWNLOADED.png"
 	data = data[2]
 	# save file
 	with open(filename, "w") as my_file:
@@ -123,7 +125,7 @@ def __request_translation(args, input_data, request_msg):
 				data[2], data[3])
 		elif data[1] == 't':
 			log.info("How lovely, the TRS has sent us translated text!")
-			message = "Got back translated text from {}:\n{}".format(
+			message = "Got back translated text from {}:\n\"{}\"".format(
 				trs_ipaddress, " ".join(data[3:]))
 		else:
 			log.error("Unexpected response from TRS Server. Response: {}".format(data))

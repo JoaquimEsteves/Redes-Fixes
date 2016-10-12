@@ -1,0 +1,15 @@
+navegador	navegador
+dominio	domínio
+extensión	extensão
+función	funcionalidade
+seguir	seguir
+seguidor	seguidor
+hola	olá
+ocultar	ocultar
+idioma	idioma
+apagar	encerrar
+historias	histórias
+historia	história
+tema	tópico
+temas	tópicos
+guardar	guardar

@@ -1,0 +1,15 @@
+pinnwände	navegador
+domain	domínio
+extension	extensão
+feature	funcionalidade
+folgen	seguir
+follower	seguidor
+hallo	olá
+ausblenden	ocultar
+sprache	idioma
+abschalten	encerrar
+geschichten	histórias
+geschichte	história
+thema	tópico
+themen	tópicos
+speichern	guardar

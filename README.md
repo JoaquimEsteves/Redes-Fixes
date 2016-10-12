@@ -8,7 +8,7 @@ TRS -> 193.136.138.142 : 59100
 
 if ctrl-c or exit plz remove from TCS server my friend!
 
-signals: 
+signals:
 
 SIGINT
 SIGPIPE
@@ -33,3 +33,30 @@ ou seja, testando cada ficheiro em separadores do terminal diferentes usariamos 
 [Terminal2] $ python tcs.py [-p TCSport]
 
 [Terminal3] $ python trs.py language [-p TRSport] [-n TCSname] [-e TCSport]
+
+
+## Possible words to be translated from Portuguese
+
+navegador
+domínio
+endereço de e-mail
+extensão
+funcionalidade
+seguir
+seguidor
+centro de ajuda
+olá
+ocultar
+caixa de entrada
+idioma
+iniciar sessão
+terminar sessão
+terminar sessão
+início de sessão
+fim de sessão
+encerrar
+histórias
+história
+tópico
+tópicos
+guardar
