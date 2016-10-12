@@ -60,9 +60,10 @@ def _request(args, input_data):
 def __request_file(input_data):
 	"""Build request message to request file translation from TRS Server"""
 	filename = input_data[3]
-	with open(filename, "r") as image_file:
+	with open(filename, "rb") as image_file:
 		encoded_data = image_file.read()
 	filesize = len(encoded_data)
+	print "\n\n\n\n\n\n\nPAY ATTENTION HERE" + encoded_data
 	return "TRQ f {} {} {}\n".format(filename, filesize, encoded_data)
 
 
@@ -118,7 +119,7 @@ def __request_translation(args, input_data, request_msg):
 			log.info("How lovely, the TRS has sent us a file!")
 			filename += "DOWNLOADED.png"
 			# save file
-			with open(filename, "w") as my_file:
+			with open(filename, "w+") as my_file:
 				my_file.write(filedata)
 			message = "Got back translated file from {}:\n{} ({} bytes)".format(trs_ipaddress,
 				filename, filesize)
