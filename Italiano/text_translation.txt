@@ -1,23 +1,15 @@
-browser	Navegador
-dominio	Domínio
-indirizzo e-mail	Endereço de e-mail
-estensione	Extensão
-funzione	Funcionalidade
-segui	Seguir
-chi ti segue	Seguidor
-Centro assistenza	Centro de Ajuda
-Ciao	Olá
-nascondere	Ocultar
-casella di posta	Caixa de Entrada
-lingua	Idioma
-accedere	Iniciar sessão
-disconnettersi	Terminar sessão
-disconnettersi	Terminar sessão
-login	Início de sessão
-logout	Fim de sessão
-spegnere	Encerrar
-storie	Histórias
-storia	História
-argomento	Tópico
-argomenti	Tópicos
-Salva	Guardar
+browser	navegador
+dominio	domínio
+estensione	extensão
+funzione	funcionalidade
+segui	seguir
+chi ti segue	seguidor
+ciao	olá
+nascondere	ocultar
+lingua	idioma
+spegnere	encerrar
+storie	histórias
+storia	história
+argomento	tópico
+argomenti	tópicos
+salva	guardar
