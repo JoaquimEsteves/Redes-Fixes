@@ -101,7 +101,8 @@ def __request_translation(args, input_data, request_msg):
 	# and request translation
 	tcp = TCP(trs_ipaddress, trs_ipport)
 	response = tcp.request(request_msg)
-	data = response.split(" ")[:4]
+	#data = response.split(" ")[:4]
+	data = response.split()
 	if "ERR" in data:
 		log.error("Error: No valid response was returned.")
 	elif "NTA" in data:
@@ -112,7 +113,7 @@ def __request_translation(args, input_data, request_msg):
 		ttype = data[1]
 		filename = data[2]
 		filesize = data[3]
-		filedata = response[len(" ".join(data)) + 1:]
+		filedata = data[3:]
 		if ttype == 'f':
 			log.info("How lovely, the TRS has sent us a file!")
 			filename += "DOWNLOADED.png"
@@ -123,8 +124,10 @@ def __request_translation(args, input_data, request_msg):
 				filename, filesize)
 		elif ttype == 't':
 			log.info("How lovely, the TRS has sent us translated text!")
-			message = "Got back translated text from {}:\n\"{}\"".format(
-				trs_ipaddress, " ".join(data[3:]))
+			message = "Got back translated text from "+trs_ipaddress+":"
+			for word in filedata:
+				message = message + "\n" + word
+			
 		else:
 			log.error("Unexpected response from TRS Server. Response: {}".format(data))
 		return message
