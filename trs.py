@@ -89,33 +89,49 @@ class TRSHandler(object):
 		return "TRR t {} {}".format(len(trans_words), " ".join(trans_words))
 
 
-	def _TRQfile(self, data):
-		"""Request file translation"""
-		def _translate(filename):
-			"""go to this TRS translation file and search for the given file translation"""
-			translate_file = settings.TRANSLATE_FILE_FILENAME
-			with open(translate_file, "r") as f:
-				for row in f.readlines():
-					target_file, source_file = row.rstrip().split("\t")
-					if filename == source_file and self.language in target_file:
-						return target_file
-			return None
+#	def _TRQfile(self, data):
+#		"""Request file translation"""
+#		def _translate(filename):
+#			"""go to this TRS translation file and search for the given file translation"""
+#			translate_file = settings.TRANSLATE_FILE_FILENAME
+#			with open(translate_file, "r") as f:
+#				for row in f.readlines():
+#					target_file, source_file = row.rstrip().split("\t")
+#					if filename == source_file and self.language in target_file:
+#						return target_file
+#			return None
 
+#		filename = data[0]
+#		filesize = data[1]
+#		encoded_data = " ".join(data[2:])
+#		if len(encoded_data) != int(filesize):
+#			log.error("File seems to be missing a few bytes!")
+#			return "TRR ERR"
+
+#		tf = _translate(filename)
+#		if tf is None:
+#			return "TRR NTA"
+
+#		with open(tf, "r") as image_file:
+#			log.debug("Reading from {}".format(tf))
+#			send_data = image_file.read()
+#			new_filesize = len(encoded_data)  #in bytes!
+#		return "TRQ f {} {} {}".format(filename, new_filesize, send_data)
+
+	def _TRQfile(self,data):
 		filename = data[0]
-		filesize = data[1]
-		encoded_data = " ".join(data[2:])
-		if len(encoded_data) != int(filesize):
-			log.error("File seems to be missing a few bytes!")
+  		filesize = data[1]
+  		encoded_data = data[2]
+  		if len(encoded_data) != int(filesize):
+  			log.error("Our file seems to be missing a few bytes!")
 			return "TRR ERR"
-
-		tf = _translate(filename)
-		if tf is None:
-			return "TRR NTA"
-
-		with open(tf, "r") as image_file:
-			log.debug("Reading from {}".format(tf))
-			send_data = image_file.read()
-			new_filesize = len(encoded_data)  #in bytes!
+  		with open("Output.png", "w") as my_file: #check to see if the pictures are the same!
+  			my_file.write(base64.b64decode(encoded_data))
+		# well then, now that everything is in order!
+  		filename = "pyrion.PNG" #just an example...
+		with open(filename, "rb") as image_file:
+  			send_data = base64.b64encode(image_file.read())
+  			new_filesize = len(encoded_data) #in bytes!
 		return "TRQ f {} {} {}".format(filename, new_filesize, send_data)
 
 
