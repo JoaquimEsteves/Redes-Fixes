@@ -42,7 +42,7 @@ Portanto, apenas substituindo a lingua ao correr o **TRS server**, irá disponib
 $ python trs.py Inglês -p 59001
 ```
 
-### Lista de Possiveis Palavras
+## Lista de Possiveis Palavras
 
 Para cada par de lingua acima referido (*Português* para *Lista de Linguas*), existe a tradução para as respectivas palavras:
 
