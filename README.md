@@ -26,7 +26,7 @@ $ python trs.py language [-p TRSport] [-n TCSname] [-e TCSport]
 ```
 
 ## Linguas Disponivels
-Nesta versão do projecto existem traduções que suportam **até 5 TRS** a correr em paralelo, cada um a servir traduções para apenas uma lingua. Notar que todas as traduções são de **Português** para *target_language*.
+Nesta versão do projecto existem traduções que suportam **até 5 TRS** a correr em paralelo (cada um a servir traduções para apenas uma lingua). Notar que todas as traduções são de **Português** para **target_language**.
 
 ## Lista de Linguas
 - Alemão
@@ -35,10 +35,10 @@ Nesta versão do projecto existem traduções que suportam **até 5 TRS** a corr
 - Italiano
 - Espanhol
 
-Portanto, apenas substituindo a lingua quando se corre o TRS server irá disponibilizar todas as traduções para a mesma lingua
+Portanto, apenas substituindo a lingua ao correr o **TRS server**, irá disponibilizar todas as traduções para a mesma lingua.
 
 ```shell
-// Exemplo
+# Exemplo
 $ python trs.py Inglês -p 59001
 ```
 
