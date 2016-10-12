@@ -1,0 +1,23 @@
+navegador	Navegador
+dominio	Domínio
+dirección de correo electrónico	Endereço de e-mail
+extensión	Extensão
+función	Funcionalidade
+seguir	Seguir
+seguidor	Seguidor
+Centro de asistencia	Centro de Ajuda
+Hola	Olá
+ocultar	Ocultar
+bandeja de entrada	Caixa de Entrada
+idioma	Idioma
+iniciar sesión	Iniciar sessão
+desconectarse	Terminar sessão
+cerrar sesión	Terminar sessão
+iniciar sesión	Início de sessão
+cerrar sesión	Fim de sessão
+apagar	Encerrar
+historias	Histórias
+historia	História
+tema	Tópico
+temas	Tópicos
+Guardar	Guardar

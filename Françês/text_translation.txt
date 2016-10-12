@@ -1,0 +1,23 @@
+tableaux	Navegador
+domaine	Domínio
+adresse e-mail	Endereço de e-mail
+extension	Extensão
+fonctionnalité	Funcionalidade
+Suivre	Seguir
+abonné	Seguidor
+Centre d'aide	Centro de Ajuda
+Bonjour	Olá
+masquer	Ocultar
+boîte de réception	Caixa de Entrada
+langue	Idioma
+se connecter	Iniciar sessão
+se déconnecter	Terminar sessão
+se déconnecter	Terminar sessão
+Se connecter	Início de sessão
+se déconnecter	Fim de sessão
+éteindre	Encerrar
+histoires	Histórias
+histoire	História
+Sujet	Tópico
+Sujets	Tópicos
+Enregistrer	Guardar

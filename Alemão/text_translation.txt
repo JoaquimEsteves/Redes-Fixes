@@ -1,0 +1,23 @@
+Pinnwände	Navegador
+Domain	Domínio
+E-Mail-Adresse	Endereço de e-mail
+Extension	Extensão
+Feature	Funcionalidade
+Folgen	Seguir
+Follower	Seguidor
+Hilfe-Center	Centro de Ajuda
+Hallo	Olá
+Ausblenden	Ocultar
+Posteingang	Caixa de Entrada
+Sprache	Idioma
+Anmelden	Iniciar sessão
+Abmelden	Terminar sessão
+Abmelden	Terminar sessão
+Anmelden	Início de sessão
+Abmelden	Fim de sessão
+Abschalten	Encerrar
+Geschichten	Histórias
+Geschichte	História
+Thema	Tópico
+Themen	Tópicos
+Speichern	Guardar

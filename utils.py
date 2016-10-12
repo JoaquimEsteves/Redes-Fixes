@@ -1,5 +1,6 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
+import os
 import sys
 import settings
 
@@ -33,17 +34,3 @@ class Logger(object):
     def warning(self, msg):
         if self._warning:
             print("[WARNING]: {}".format(msg))
-
-
-def create_translation_files():
-    # create transltion files
-    keywords = "ola mundo tudo bem como vai a vida espero que vá bem porreiro pah chiça penico fibra optica".split()
-    for l in settings.ACCEPTED_LANGUAGES:
-        filename = "trs_{}.txt".format(l)
-        with open(filename, 'w+') as f:
-            content = map(
-                lambda x: "{}\t{}".format(x[0], x[1]),
-                zip(keywords, ['<translation_required>'] * len(keywords))
-            )
-            f.write("\n".join(content))
-

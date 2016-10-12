@@ -54,10 +54,10 @@ class TRSHandler(object):
 		# data = [<num_words>, <words>]"
 		def _translate(word):
 			"""go to this TRS translation file and search for the given word translation"""
-			translate_file = settings.TRANSLATE_DB_FILENAME.format(self.language)
+			translate_file = settings.TRANSLATE_TEXT_FILENAME.format(self.language)
 			with open(translate_file, "r") as f:
 				for row in f.readlines():
-					source_word, target_word = row.rstrip().split("\t")
+					target_word, source_word = row.rstrip().split("\t")
 					if word == source_word:
 						return target_word
 			return None
@@ -92,6 +92,16 @@ class TRSHandler(object):
 
 	def _TRQfile(self, data):
 		"""Request file translation"""
+		def _translate(filename):
+			"""go to this TRS translation file and search for the given file translation"""
+			translate_file = settings.TRANSLATE_FILE_FILENAME
+			with open(translate_file, "r") as f:
+				for row in f.readlines():
+					target_file, source_file = row.rstrip().split("\t")
+					if filename == source_file:
+						return target_file
+			return None
+
 		filename = data[0]
 		filesize = data[1]
 		encoded_data = data[2]
@@ -99,10 +109,13 @@ class TRSHandler(object):
 			log.error("File seems to be missing a few bytes!")
 			return "TRR ERR"
 
-		filename = ".".join(filename.split(".")[:-1]) + "_translated.png"
-		with open(filename, "rb") as image_file:
+		tf = _translate(filename)
+		if tf is None:
+			return "TRR NTA"
+
+		with open(tf, "rb") as image_file:
 			send_data = base64.b64encode(image_file.read())
-			new_filesize = len(encoded_data) #in bytes!
+			new_filesize = len(encoded_data)  #in bytes!
 		return "TRQ f {} {} {}".format(filename, new_filesize, send_data)
 
 
