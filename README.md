@@ -41,10 +41,36 @@ Portanto, apenas substituindo a lingua ao correr o **TRS server**, irá disponib
 # Exemplo
 $ python trs.py Inglês -p 59001
 ```
+## Ficheiro para Tradução
 
-## Lista de Possiveis Palavras
+Disponibilizamos apenas um ficheiro para tradução que se dá pelo nome **pyrion.png**.
+Existe tradução desta imagem para cada uma das linguas anteriormente mencionadas. Para chamar a tradução da imagem apenas tem de correr o mesmo que está no exemplo abaixo. Note que cada tradução tem uma imagem diferente. Para simplificação, as traduções da imagem são apenas a mesma imagem com diferentes *hues*, *saturações* e *luminosidades* e o nome, para o qual o ficheiro recebido, é **pyrion.pngDOWNLOADED.png**.
 
-Para cada par de lingua acima referido (*Português* para *Lista de Linguas*), existe a tradução para as respectivas palavras:
+```shell
+# exemplo
+$ python user.py 
+[INFO]: Starting client...
+[INFO]: Welcome :).
+$ list
+[DEBUG]: [UDP] Sending request to localhost:58001 > "ULQ".
+[DEBUG]: [UDP] Got back > "ULR 2 Inglês Alemão".
+Got 2 languages:
+1. Inglês
+2. Alemão
+$ request 1 f pyrion.png
+[DEBUG]: [UDP] Sending request to localhost:58001 > "UNQ Inglês".
+[DEBUG]: [UDP] Got back > "UNR 127.0.0.1 59001".
+[DEBUG]: [TCP] Sending request to 127.0.0.1:59001 > "TRQ f pyrion.png 35520 ?PNGIHDR?EV*sRGB.."
+[DEBUG]: [TCP] Got back > "TRQ f pyrion.png 35520 ?PNGIHDR?EV*sRGB...".
+[INFO]: How lovely, the TRS has sent us a file!
+Got back translated file from 127.0.0.1:
+pyrion.png (35520 bytes)
+```
+
+
+## Lista de Possiveis Palavras para Tradução
+
+Para cada par de lingua acima referido (**Português** para **Lista de Linguas**), existe a tradução para as respectivas palavras:
 
 ```text
 navegador
@@ -71,3 +97,26 @@ tópico
 tópicos
 guardar
 ```
+
+
+```shell
+# exemplo
+$ python user.py 
+[INFO]: Starting client...
+[INFO]: Welcome :).
+$ list
+[DEBUG]: [UDP] Sending request to localhost:58001 > "ULQ".
+[DEBUG]: [UDP] Got back > "ULR 2 Inglês Alemão".
+Got 2 languages:
+1. Inglês
+2. Alemão
+$ request 1 t olá
+[DEBUG]: [UDP] Sending request to localhost:58001 > "UNQ Inglês".
+[DEBUG]: [UDP] Got back > "UNR 127.0.0.1 59001".
+[DEBUG]: [TCP] Sending request to 127.0.0.1:59001 > "TRQ t 1 olá"
+[DEBUG]: [TCP] Got back > "TRR t 1 hi".
+Got back translated file from 127.0.0.1:
+"hi"
+```
+
+
