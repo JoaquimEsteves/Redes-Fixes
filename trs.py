@@ -97,7 +97,7 @@ class TRSHandler(object):
 			with open(translate_file, "r") as f:
 				for row in f.readlines():
 					target_file, source_file = row.rstrip().split("\t")
-					if filename == source_file:
+					if filename == source_file and self.language in target_file:
 						return target_file
 			return None
 
@@ -113,6 +113,7 @@ class TRSHandler(object):
 			return "TRR NTA"
 
 		with open(tf, "r") as image_file:
+			log.debug("Reading from {}".format(tf))
 			send_data = image_file.read()
 			new_filesize = len(encoded_data)  #in bytes!
 		return "TRQ f {} {} {}".format(filename, new_filesize, send_data)

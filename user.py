@@ -29,13 +29,6 @@ def _list(args):
 			AVAILABLE_LANGUAGES.append(lang)
 			print("{}. {}".format(i, lang))
 
-def _saveTCPFile(data):
-	filename = data[0] + "DOWNLOADED.png"
-	data = data[2]
-	# save file
-	with open(filename, "w") as my_file:
-		my_file.write(data)
-
 def _request(args, input_data):
 	"""Method that handles the request functionality"""
 	try:
@@ -108,8 +101,7 @@ def __request_translation(args, input_data, request_msg):
 	# and request translation
 	tcp = TCP(trs_ipaddress, trs_ipport)
 	response = tcp.request(request_msg)
-	data = response.split()
-
+	data = response.split(" ")[:4]
 	if "ERR" in data:
 		log.error("Error: No valid response was returned.")
 	elif "NTA" in data:
@@ -117,12 +109,19 @@ def __request_translation(args, input_data, request_msg):
 	else:
 		# go translations
 		message = ""
-		if data[1] == 'f':
+		ttype = data[1]
+		filename = data[2]
+		filesize = data[3]
+		filedata = response[len(" ".join(data)) + 1:]
+		if ttype == 'f':
 			log.info("How lovely, the TRS has sent us a file!")
-			_saveTCPFile(data[2:])
+			filename += "DOWNLOADED.png"
+			# save file
+			with open(filename, "w") as my_file:
+				my_file.write(filedata)
 			message = "Got back translated file from {}:\n{} ({} bytes)".format(trs_ipaddress,
-				data[2], data[3])
-		elif data[1] == 't':
+				filename, filesize)
+		elif ttype == 't':
 			log.info("How lovely, the TRS has sent us translated text!")
 			message = "Got back translated text from {}:\n\"{}\"".format(
 				trs_ipaddress, " ".join(data[3:]))
