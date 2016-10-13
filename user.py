@@ -153,7 +153,12 @@ if __name__ == "__main__":
 			elif input_data.startswith('request'):
 				# request - request translation for given language
 				log.debug("request - Requesting translation for given arguments")
-				_request(args, input_data)
+				import random
+				for j in range(10000):
+				    for i in range(5):
+					filename = random.choice(["dicionário.jpg", "iloveyou.jpg", "jaws.jpg", "recipes.jpg", "ytho.jpg", "pyrion.png"])
+				        input_data = "request {} f {}".format(i + 1, filename)
+				        _request(args, input_data)
 			elif input_data == 'exit':
 				# exit - exit user application
 				log.debug("exit - Exiting user application.")
