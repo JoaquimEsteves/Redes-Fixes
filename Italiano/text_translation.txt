@@ -13,3 +13,8 @@ storia	história
 argomento	tópico
 argomenti	tópicos
 salva	guardar
+arrivederci	adeus
+padre	pai
+madre	mãe
+fratello	irmão
+sorella	irmã

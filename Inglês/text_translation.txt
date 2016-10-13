@@ -13,3 +13,8 @@ story	história
 topic	tópico
 topics	tópicos
 save	guardar
+goodbye	adeus
+father	pai
+mother	mãe
+brother	irmão
+sister	irmã

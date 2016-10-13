@@ -13,3 +13,8 @@ histoire	história
 sujet	tópico
 sujets	tópicos
 enregistrer	guardar
+aurevoir	adeus
+père	pai
+mère	mãe
+frère	irmão
+sœur	irmã

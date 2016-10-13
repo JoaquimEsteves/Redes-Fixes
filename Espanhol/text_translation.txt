@@ -13,3 +13,8 @@ historia	história
 tema	tópico
 temas	tópicos
 guardar	guardar
+adiós	adeus
+padre	pai
+madre	mãe
+hermano	irmão
+hermana	irmã

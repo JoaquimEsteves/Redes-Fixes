@@ -101,7 +101,7 @@ class TRSHandler(object):
 						return target_file
 			return None
 
-		filename = data[0]
+		filename = data[0].lower()
 		filesize = data[1]
 		encoded_data = " ".join(data[2:])
 		if len(encoded_data) != int(filesize):
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 	if response == "SRR OK":
 		log.error("TCS Server register TRS Server \"{}\" successfully.".format(args.language))
 	elif response == "SRR NOK":
-		log.error("TCS Server was not able to register TRS Server \"{}\". Already register.".format(args.language))
+		log.error("TCS Server was not able to register TRS Server \"{}\". Already register or invalid language.".format(args.language))
 		log.info("Exiting TRS Server...")
 		sys.exit()
 	else:
