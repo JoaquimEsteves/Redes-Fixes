@@ -108,6 +108,11 @@ class TRSHandler(object):
 			log.error("File seems to be missing a few bytes!")
 			return "TRR ERR"
 
+		# save file in local trs server
+		with open(filename, "w+") as image_file:
+			log.debug("Writing into {}".format(filename))
+			image_file.write(encoded_data)
+
 		tf = _translate(filename)
 		if tf is None:
 			return "TRR NTA"
@@ -116,7 +121,7 @@ class TRSHandler(object):
 			log.debug("Reading from {}".format(tf))
 			send_data = image_file.read()
 			new_filesize = len(encoded_data)  #in bytes!
-		return "TRQ f {} {} {}".format(tf, new_filesize, send_data)
+		return "TRR f {} {} {}".format(tf, new_filesize, send_data)
 
 
 if __name__ == "__main__":
