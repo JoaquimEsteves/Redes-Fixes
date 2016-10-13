@@ -118,11 +118,11 @@ class TCP(Protocol):
 	    data = ""
 	    data_connection = sock.recv(self.buffer_size)
 	    while data_connection:
-		data += data_connection
-		log.debug("Received {} bytes".format(len(data)))
-		data_connection = sock.recv(self.buffer_size)
+	        data += data_connection
+	        log.debug("Received {} bytes".format(len(data)))
+	        data_connection = sock.recv(self.buffer_size)
 	    data += data_connection
-            log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(data)[:64]))
+	    log.debug("[TCP] Got back > \"{}\".".format(self._remove_new_line(data)[:64]))
         # in case of timeout
         except timeout, msg:
             log.error("[TCP] Request Timeout. {}".format(msg))
