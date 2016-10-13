@@ -75,21 +75,13 @@ Para cada par de lingua acima referido (**Português** para **Lista de Linguas**
 ```text
 navegador
 domínio
-endereço de e-mail
 extensão
 funcionalidade
 seguir
 seguidor
-centro de ajuda
 olá
 ocultar
-caixa de entrada
 idioma
-iniciar sessão
-terminar sessão
-terminar sessão
-início de sessão
-fim de sessão
 encerrar
 histórias
 história
