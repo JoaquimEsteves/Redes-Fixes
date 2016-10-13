@@ -124,9 +124,11 @@ if __name__ == "__main__":
 	# format of command is ./trs language [-p TRSport] [-n TCSname] [-e TCSport],
 	parser = argparse.ArgumentParser()
 	parser.add_argument('language', help='Language of translations.')
+	parser.add_argument('-n', dest='trs_name', type=str, default=settings.DEFAULT_TRS_NAME,
+						help='Translation Server Port Address.')
 	parser.add_argument('-p', dest='trs_port', type=int, default=settings.DEFAULT_TRS_PORT,
 						help='Translation Server Port Address.')
-	parser.add_argument('-n', dest='tcs_name', type=str, default=settings.DEFAULT_TCS_NAME,
+	parser.add_argument('-c', dest='tcs_name', type=str, default=settings.DEFAULT_TCS_NAME,
 						help='Translation Contact Server IP Address.')
 	parser.add_argument('-e', dest='tcs_port', type=int, default=settings.DEFAULT_TCS_PORT,
 						help='Translation Contact Server Port Address.')
@@ -138,9 +140,9 @@ if __name__ == "__main__":
 	# for steps 1º and 3º we need an UDP connection
 	udp = UDP(args.tcs_name, args.tcs_port)
 	# for 2º step, we need a TCP connection
-	tcp = TCP(settings.DEFAULT_TRS_NAME, args.trs_port)
+	tcp = TCP(args.trs_name, args.trs_port)
 	# 1º - register this server into TCS database
-	response = udp.request("SRG {} {} {}\n".format(args.language, settings.DEFAULT_TRS_NAME, args.trs_port))
+	response = udp.request("SRG {} {} {}\n".format(args.language, args.trs_name, args.trs_port))
 	if response == "SRR OK":
 		log.error("TCS Server register TRS Server \"{}\" successfully.".format(args.language))
 	elif response == "SRR NOK":

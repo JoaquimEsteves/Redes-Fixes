@@ -202,6 +202,8 @@ if __name__ == "__main__":
     log.info("Starting TCS server...")
     # format of command is ./tcs [-p TCSport],
     parser = argparse.ArgumentParser()
+    parser.add_argument('-n', dest='tcs_name', type=str, default=settings.DEFAULT_TCS_NAME,
+						help='Translation Contact Server IP Address.')
     parser.add_argument('-p', dest='tcs_port', type=int, default=settings.DEFAULT_TCS_PORT,
                         help='Translation Contact Server Port Address.')
     args = parser.parse_args()  # validate them
@@ -211,7 +213,7 @@ if __name__ == "__main__":
     handler = TCSHandler()
     try:
         # running server
-        udp = UDP(settings.DEFAULT_TCS_NAME, args.tcs_port)
+        udp = UDP(args.tcs_name, args.tcs_port)
         udp.run(handler=handler)
     except KeyboardInterrupt, e:
         # if CTRL+C is pressed, then go for last step
