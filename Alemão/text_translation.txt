@@ -13,3 +13,8 @@ geschichte	história
 thema	tópico
 themen	tópicos
 speichern	guardar
+aufwiedersehen	adeus
+vater	pai
+mutter	mãe
+bruder	irmão
+schwester	irmã

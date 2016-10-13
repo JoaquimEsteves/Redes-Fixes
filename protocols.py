@@ -68,7 +68,7 @@ class UDP(Protocol):
         try:
             # Bind socket to local host and port
             sock.bind((self.host, self.port))
-        except error , msg:
+        except error, msg:
             log.error(msg)
             raise error
 
