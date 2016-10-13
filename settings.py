@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """All project settings are defined here"""
 import os
+import socket
 # Group Number
 GN = 1
 
@@ -9,11 +10,11 @@ GN = 1
 DEBUG = True
 
 # Translation Contact Server default configuration
-DEFAULT_TCS_NAME = ''
+DEFAULT_TCS_NAME = socket.gethostbyname(socket.gethostname())  # 'localhost'
 DEFAULT_TCS_PORT = 58000 + GN
 
 # Translation Server default configurations
-DEFAULT_TRS_NAME = ''
+DEFAULT_TRS_NAME = socket.gethostbyname(socket.gethostname())  # 'localhost'
 DEFAULT_TRS_PORT = 59000
 
 # Size for buffer to hold all messages send between client and server (1024bytes*4*1024 = 4mb)
