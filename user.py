@@ -111,10 +111,10 @@ def __request_translation(args, input_data, request_msg):
 		ttype = data[1]
 		if ttype == 'f':
 			log.info("How lovely, the TRS has sent us a file!")
-			filename = data[2] + "DOWNLOADED.png"
+			filename = data[2]
 			filesize = data[3]
 			# get all data after filesize
-			index = len(response.split(" ")[:4] ) + 1
+			index = len(" ".join(response.split(" ")[:4])) + 1
 			filedata = response[index:]
 			# save file
 			with open(filename, "w+") as my_file:
