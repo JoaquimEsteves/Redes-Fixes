@@ -101,20 +101,20 @@ def __request_translation(args, input_data, request_msg):
 	# and request translation
 	tcp = TCP(trs_ipaddress, trs_ipport)
 	response = tcp.request(request_msg)
-	data = response.split(" ")[:4]
-	if "ERR" in data:
+	if "ERR" in response:
 		log.error("Error: No valid response was returned.")
-	elif "NTA" in data:
+	elif "NTA" in response:
 		log.error("Error: No translations were found for given request.")
 	else:
 		# go translations
 		message = ""
+		data = response.split(" ")[:4]
 		ttype = data[1]
-		filename = data[2]
-		filesize = data[3]
-		filedata = response[len(" ".join(data)) + 1:]
 		if ttype == 'f':
 			log.info("How lovely, the TRS has sent us a file!")
+			filename = data[2]
+			filesize = data[3]
+			filedata = response[len(" ".join(data)) + 1:]
 			filename += "DOWNLOADED.png"
 			# save file
 			with open(filename, "w") as my_file:
