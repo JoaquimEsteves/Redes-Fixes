@@ -116,7 +116,7 @@ class TRSHandler(object):
 			log.debug("Reading from {}".format(tf))
 			send_data = image_file.read()
 			new_filesize = len(encoded_data)  #in bytes!
-		return "TRQ f {} {} {}".format(filename, new_filesize, send_data)
+		return "TRQ f {} {} {}".format(tf, new_filesize, send_data)
 
 
 if __name__ == "__main__":

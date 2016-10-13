@@ -29,7 +29,7 @@ TRANSLATE_MAX_LIMIT = 10
 TRANSLATE_TEXT_FILENAME = os.getcwd() + "/{}/text_translation.txt"
 TRANSLATE_FILE_FILENAME = os.getcwd() + "/file_translation.txt"
 F_IMAGE_FILENAME = "pyrion{}.png"
-ACCEPTED_LANGUAGES = ['Inglês', 'Françês', 'Espanhol', 'Alemão', 'Italiano']
+ACCEPTED_LANGUAGES = ['Inglês', 'Francês', 'Espanhol', 'Alemão', 'Italiano']
 
 # "Local Database" path
 DB_PATH = os.getcwd() + "/local_db.txt"
